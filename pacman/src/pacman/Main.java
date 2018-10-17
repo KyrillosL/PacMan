@@ -7,7 +7,7 @@ public class Main {
 	       Game jeu = new SimpleGame(10); 
 	       jeu.initializeGame();
 	       //jeu.run();
-	       View view = new View(jeu);
+		   ControleurGame controleur = new ControleurAvance(jeu);
 	        
 	    }
 

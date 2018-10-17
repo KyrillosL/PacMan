@@ -12,11 +12,12 @@ import javax.swing.JButton;
 
 
 public class View implements Observer {
-	Game game; 
-	ControleurGame controleur; 
-	public View(Game g){
-		
-
+	
+	protected JButton restart; 
+	protected JButton pause; 
+	protected JButton step;
+	protected JButton run; 
+	public View(ControleurGame controleur ){
 		
 		
 		JFrame commande = new JFrame();
@@ -38,19 +39,19 @@ public class View implements Observer {
 		JPanel panelBoutons = new JPanel();
 
 		Icon icon_restart = new ImageIcon("Icones/icon_restart.png");
-		JButton restart = new JButton(icon_restart); 
+		restart = new JButton(icon_restart); 
 		panelBoutons.add(restart); 
 		
 		Icon icon_run = new ImageIcon("Icones/icon_run.png");
-		JButton run = new JButton(icon_run); 
+		run = new JButton(icon_run); 
 		panelBoutons.add(run); 
 		
 		Icon icon_step = new ImageIcon("Icones/icon_step.png");
-		JButton step = new JButton(icon_step); 
+		step = new JButton(icon_step); 
 		panelBoutons.add(step); 
 		
 		Icon icon_pause = new ImageIcon("Icones/icon_pause.png");
-		JButton pause = new JButton(icon_pause); 
+		pause = new JButton(icon_pause); 
 		panelBoutons.add(pause); 
 		
 		panelBoutons.setLayout(boutons);
@@ -93,9 +94,7 @@ public class View implements Observer {
         fenetreJeu.setVisible(true);
         
         
-        
-	    game = g;
-		controleur = new ControleurBasique(game);
+
         
 	    run.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -105,24 +104,19 @@ public class View implements Observer {
 		});
 	    restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.init();
+				controleur.init();
 				
 			}
 		});
 	    pause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				game.stop();
+				controleur.stop();
 				
 			}
 		});
 	    step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					game.step();
-				} catch (InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				controleur.step();
 				
 			}
 		});
@@ -137,15 +131,11 @@ public class View implements Observer {
 	
 	}
 
-
-
-
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
-
-
 	}
+	
+
 
 }
