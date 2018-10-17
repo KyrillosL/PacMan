@@ -8,7 +8,12 @@ public class ControleurAvance implements ControleurGame {
 	
 	public ControleurAvance(Game g) {
 		game = g; 
-		view = new View(this);
+		try {
+			view = new View(this);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

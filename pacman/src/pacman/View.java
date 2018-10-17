@@ -17,7 +17,7 @@ public class View implements Observer {
 	protected JButton pause; 
 	protected JButton step;
 	protected JButton run; 
-	public View(ControleurGame controleur ){
+	public View(ControleurGame controleur ) throws Exception{
 		
 		
 		JFrame commande = new JFrame();
@@ -83,7 +83,7 @@ public class View implements Observer {
 	    JFrame fenetreJeu = new JFrame();
 	    fenetreJeu.setTitle("JEU");
 	    fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    fenetreJeu.setSize(new Dimension(1000, 500));
+	    fenetreJeu.setSize(new Dimension(1000, 1000));
         
         Dimension windowSizeFenetreJeu = fenetreJeu.getSize();
         GraphicsEnvironment geFJ = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -92,6 +92,10 @@ public class View implements Observer {
         int dyFJ = centerPointFJ.y - windowSizeFenetreJeu.height / 2+100 ; 
         fenetreJeu.setLocation(dxFJ, dyFJ);
         fenetreJeu.setVisible(true);
+        Maze maze = new Maze("layouts/bigMaze.lay");
+        PanelPacmanGame ppg = new PanelPacmanGame(maze); 
+        
+        fenetreJeu.add(ppg);
         
         
 

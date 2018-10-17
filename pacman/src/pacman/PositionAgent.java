@@ -1,4 +1,4 @@
-package tp3_etu;
+package pacman;
 
 public class PositionAgent {
 	
