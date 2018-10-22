@@ -26,6 +26,12 @@ public class SimpleGame extends Game {
 		System.out.println("gameOver");
 	}
 
+	@Override
+	public Maze getMaze() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

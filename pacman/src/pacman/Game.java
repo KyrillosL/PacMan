@@ -85,4 +85,7 @@ public abstract class Game implements Runnable, Sujet {
 	abstract void takeTurn();
 	abstract void gameOver();
 
+
+	public abstract Maze getMaze();
+
 }

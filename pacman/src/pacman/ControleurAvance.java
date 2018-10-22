@@ -14,6 +14,11 @@ public class ControleurAvance implements ControleurGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		view.setPanel(g.getMaze());
+        
+		view.fenetreJeu.setVisible(true);
+
 	}
 	
 	@Override
@@ -23,6 +28,7 @@ public class ControleurAvance implements ControleurGame {
 		view.run.setEnabled(false);
 		view.pause.setEnabled(true);
 		view.restart.setEnabled(true);
+		
 
 	}
 	

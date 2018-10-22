@@ -33,6 +33,7 @@ public class PanelPacmanGame extends JPanel{
 
 	public PanelPacmanGame(Maze maze) {
 		this.m = maze;
+		//System.out.println(maze.toString());
 		pacmans_pos = this.m.getPacman_start();
 		ghosts_pos = this.m.getGhosts_start();
 		ghostsScarred = false;		
