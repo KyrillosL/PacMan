@@ -49,10 +49,11 @@ public abstract class Game implements Runnable, Sujet {
 	}
 	
 	protected void step() throws InterruptedException {
+		//System.out.println("Step Game ");
 		if (!termine) {
 			takeTurn(); 
 			nbTour++;
-			Thread.sleep(2000);
+			//Thread.sleep(2000);
 			
 		}
 		else {

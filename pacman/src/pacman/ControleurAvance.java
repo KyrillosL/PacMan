@@ -3,8 +3,8 @@ package pacman;
 public class ControleurAvance implements ControleurGame {
 
 
-	Game game; 
-	View view; 
+	public Game game; 
+	public View view; 
 	
 	public ControleurAvance(Game g) {
 		game = g; 
@@ -55,6 +55,8 @@ public class ControleurAvance implements ControleurGame {
 		// TODO Auto-generated method stub
 		try {
 			game.step();
+			view.update(); //update quand le jeu change. CHANGER ICI !!!!
+			//System.out.println("STEP CONTROLEUR ");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

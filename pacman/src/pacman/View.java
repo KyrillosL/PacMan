@@ -18,6 +18,9 @@ public class View implements Observer {
 	protected JButton step;
 	protected JButton run; 
 	protected JFrame fenetreJeu;
+	PanelPacmanGame ppg;
+	Game game; 
+	
 	public View(ControleurGame controleur ) throws Exception{
 		
 		
@@ -57,7 +60,7 @@ public class View implements Observer {
 		
 		panelBoutons.setLayout(boutons);
 		
-
+		
 				
 		
 		GridLayout sliderAndText = new GridLayout(1,2);
@@ -122,6 +125,7 @@ public class View implements Observer {
 	    step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controleur.step();
+				//System.out.println("STEP");
 				
 			}
 		});
@@ -129,7 +133,7 @@ public class View implements Observer {
 	    
 	    
 
-    
+
         
 	    
 		
@@ -138,12 +142,15 @@ public class View implements Observer {
 
 	public void setPanel(Maze m ) {
 		
-        PanelPacmanGame ppg = new PanelPacmanGame(m); 
+		ppg = new PanelPacmanGame(m); 
+		
         fenetreJeu.add(ppg);
 	}
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
+		fenetreJeu.repaint();
 	}
 	
 
