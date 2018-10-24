@@ -3,8 +3,8 @@ package pacman;
 public class ControleurAvance implements ControleurGame {
 
 
-	Game game; 
-	View view; 
+	public Game game; 
+	public View view; 
 	
 	public ControleurAvance(Game g) {
 		game = g; 
@@ -14,6 +14,11 @@ public class ControleurAvance implements ControleurGame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		view.setPanel(g.getMaze());
+        
+		view.fenetreJeu.setVisible(true);
+
 	}
 	
 	@Override
@@ -23,6 +28,7 @@ public class ControleurAvance implements ControleurGame {
 		view.run.setEnabled(false);
 		view.pause.setEnabled(true);
 		view.restart.setEnabled(true);
+		
 
 	}
 	
@@ -49,6 +55,8 @@ public class ControleurAvance implements ControleurGame {
 		// TODO Auto-generated method stub
 		try {
 			game.step();
+			view.update(); //update quand le jeu change. CHANGER ICI !!!!
+			//System.out.println("STEP CONTROLEUR ");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

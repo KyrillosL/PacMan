@@ -17,6 +17,10 @@ public class View implements Observer {
 	protected JButton pause; 
 	protected JButton step;
 	protected JButton run; 
+	protected JFrame fenetreJeu;
+	PanelPacmanGame ppg;
+	Game game; 
+	
 	public View(ControleurGame controleur ) throws Exception{
 		
 		
@@ -56,7 +60,7 @@ public class View implements Observer {
 		
 		panelBoutons.setLayout(boutons);
 		
-
+		
 				
 		
 		GridLayout sliderAndText = new GridLayout(1,2);
@@ -80,7 +84,7 @@ public class View implements Observer {
         
         
         
-	    JFrame fenetreJeu = new JFrame();
+	    fenetreJeu = new JFrame();
 	    fenetreJeu.setTitle("JEU");
 	    fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    fenetreJeu.setSize(new Dimension(1000, 1000));
@@ -92,10 +96,10 @@ public class View implements Observer {
         int dyFJ = centerPointFJ.y - windowSizeFenetreJeu.height / 2+100 ; 
         fenetreJeu.setLocation(dxFJ, dyFJ);
         fenetreJeu.setVisible(true);
-        Maze maze = new Maze("layouts/bigMaze.lay");
-        PanelPacmanGame ppg = new PanelPacmanGame(maze); 
         
-        fenetreJeu.add(ppg);
+        
+        
+
         
         
 
@@ -121,6 +125,7 @@ public class View implements Observer {
 	    step.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controleur.step();
+				//System.out.println("STEP");
 				
 			}
 		});
@@ -128,16 +133,24 @@ public class View implements Observer {
 	    
 	    
 
-        
+
         
 	    
 		
 	
 	}
 
+	public void setPanel(Maze m ) {
+		
+		ppg = new PanelPacmanGame(m); 
+		
+        fenetreJeu.add(ppg);
+	}
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
+		
+		fenetreJeu.repaint();
 	}
 	
 
