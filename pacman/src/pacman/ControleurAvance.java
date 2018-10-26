@@ -9,15 +9,17 @@ public class ControleurAvance implements ControleurGame {
 	public ControleurAvance(Game g) {
 		game = g; 
 		try {
-			view = new View(this);
+			view = new View(this, g);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		view.setPanel(g.getMaze());
+		//view.setPanel(g.getMaze());
+		
+
         
-		view.fenetreJeu.setVisible(true);
+		
 
 	}
 	
@@ -55,7 +57,7 @@ public class ControleurAvance implements ControleurGame {
 		// TODO Auto-generated method stub
 		try {
 			game.step();
-			view.update(); //update quand le jeu change. CHANGER ICI !!!!
+			//view.update(); //update quand le jeu change. CHANGER ICI !!!! La vue est un observer, elle est updaté automatiquement dès qu'il se passe quelque chose; 
 			//System.out.println("STEP CONTROLEUR ");
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

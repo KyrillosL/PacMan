@@ -172,6 +172,7 @@ public class Maze implements Serializable{
 	
 	
 	public ArrayList<PositionAgent> getPacman_start() {
+		System.out.println("dans pacman start ");
 		return pacman_start;
 	}
 
