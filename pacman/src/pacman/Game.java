@@ -49,7 +49,8 @@ public abstract class Game implements Runnable, Sujet {
 		maxTour=mt; 
 
         try {
-			maze = new Maze("layouts/originalClassic.lay");
+			//maze = new Maze("layouts/originalClassic.lay");
+        	//maze = new Maze("layouts/capsuleClassic.lay");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -58,10 +59,25 @@ public abstract class Game implements Runnable, Sujet {
 	}
 	
 	protected void init() {
+		
+		
 		isRunning=false; 
 		nbTour =0; 
+		
+		try {
+			//maze = new Maze("layouts/originalClassic.lay");
+			maze = null; 
+        	maze = new Maze("layouts/capsuleClassic.lay");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		initializeGame(); 
 		notifyObserver(); 
+		
 		 
 	}
 	

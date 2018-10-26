@@ -40,6 +40,7 @@ public class ControleurAvance implements ControleurGame {
 		game.init(); 
 		view.restart.setEnabled(false);
 		view.pause.setEnabled(true);
+		view.run.setEnabled(true);
 
 	}
 
