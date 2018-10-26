@@ -92,6 +92,7 @@ public class PanelPacmanGame extends JPanel{
 		}
 
 		for(int i = 0; i < pacmans_pos.size(); i++){
+
 			PositionAgent pos = pacmans_pos.get(i);
 			drawPacmans(g, pos.getX(), pos.getY(), pos.getDir(), pacmansColor);	
 		}
@@ -194,6 +195,7 @@ public class PanelPacmanGame extends JPanel{
 	}
 
 	public void setPacmans_pos(ArrayList<PositionAgent> pacmans_pos) {
+
 		this.pacmans_pos = pacmans_pos;
 	}
 

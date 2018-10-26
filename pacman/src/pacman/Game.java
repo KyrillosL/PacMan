@@ -8,11 +8,17 @@ public abstract class Game implements Runnable, Sujet {
 	
 	 Thread thread;  
 	 
+		public Maze maze; 
+	 
     public void launch(){  
         thread = new Thread(this);    
         thread.start();
         
     }
+	public Maze getMaze() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 	@Override
@@ -41,32 +47,46 @@ public abstract class Game implements Runnable, Sujet {
 	
 	Game(int mt){
 		maxTour=mt; 
+
+        try {
+			maze = new Maze("layouts/mediumClassic_fivePacmans.lay");
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	protected void init() {
+		isRunning=false; 
 		nbTour =0; 
 		initializeGame(); 
+		notifyObserver(); 
+		 
 	}
 	
 	protected void step() throws InterruptedException {
 		//System.out.println("Step Game ");
+		isRunning=true; 
 		if (!termine) {
 			takeTurn(); 
 			nbTour++;
+			//notifyObserver(); 
 			//Thread.sleep(2000);
 			
 		}
 		else {
 			gameOver(); 
 		}
-		
+		notifyObserver(); 
 		
 	}
 	public void run() {
-		
-		while( !termine && !isRunning && nbTour != maxTour) {
+		isRunning=true; 
+		while( !termine && isRunning && nbTour != maxTour) {
 			try {
 				step();
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -76,6 +96,8 @@ public abstract class Game implements Runnable, Sujet {
 	}
 	protected void stop() {
 		isRunning=false; 
+		System.out.println("STOP");
+		notifyObserver(); 
 	}
 	
 	protected int nbTour;
@@ -85,8 +107,11 @@ public abstract class Game implements Runnable, Sujet {
 	abstract void initializeGame();
 	abstract void takeTurn();
 	abstract void gameOver();
+	public PanelPacmanGame getPpg() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
-	public abstract Maze getMaze();
 
 }

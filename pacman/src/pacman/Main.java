@@ -8,10 +8,13 @@ public class Main {
 	       //jeu.initializeGame();
 	       //jeu.run();
 		  
-		  Game jeu = new PacmanGame(10); 
-		  jeu.initializeGame();
-		  ControleurGame controleur = new ControleurAvance(jeu);
-	        
-	    }
+		  Game jeu = new PacmanGame(100000000); 
+		  jeu.init();
+		  ControleurAvance controleur = new ControleurAvance(jeu);
+		  
+
+		  jeu.registerObserver(controleur.view);
+	  }
+
 
 }

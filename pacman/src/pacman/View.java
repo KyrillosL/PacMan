@@ -21,8 +21,9 @@ public class View implements Observer {
 	PanelPacmanGame ppg;
 	Game game; 
 	
-	public View(ControleurGame controleur ) throws Exception{
+	public View(ControleurGame controleur, Game g ) throws Exception{
 		
+		game = g; 
 		
 		JFrame commande = new JFrame();
 		commande.setTitle("Commande");
@@ -87,8 +88,12 @@ public class View implements Observer {
 	    fenetreJeu = new JFrame();
 	    fenetreJeu.setTitle("JEU");
 	    fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
+	    
 	    fenetreJeu.setSize(new Dimension(1000, 1000));
         
+	    
+	    
         Dimension windowSizeFenetreJeu = fenetreJeu.getSize();
         GraphicsEnvironment geFJ = GraphicsEnvironment.getLocalGraphicsEnvironment();
         Point centerPointFJ = geFJ.getCenterPoint();
@@ -99,8 +104,24 @@ public class View implements Observer {
         
         
         
-
+/*
+        ppg = new PanelPacmanGame(game.maze); 
+		
+		fenetreJeu.setSize(  game.maze.getSizeX()*50,game.maze.getSizeY()*50);
+		//fenetreJeu.setBounds(0,0, m.getSizeX(),m.getSizeY());
+		
+        fenetreJeu.add(ppg);
         
+        System.out.println("size X: "+ fenetreJeu.getWidth() +", size Y : "+fenetreJeu.getHeight());
+        
+*/
+        
+		ppg = game.getPpg(); 
+
+		fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
+
+		
+        fenetreJeu.add(ppg);
         
 
         
@@ -130,9 +151,11 @@ public class View implements Observer {
 			}
 		});
 
+	  
+	   // game.setPositionPacmans(ppg.getPacmans_pos());
 	    
 	    
-
+	    
 
         
 	    
@@ -140,16 +163,29 @@ public class View implements Observer {
 	
 	}
 
-	public void setPanel(Maze m ) {
+	public void setPanel(PanelPacmanGame p ) {
 		
-		ppg = new PanelPacmanGame(m); 
+		
+		ppg = p; 
+		
+		
+		//ppg = new PanelPacmanGame(m); 
+		//System.out.println("size X: "+ m.getSizeX()+", size Y : "+m.getSizeY());
+		fenetreJeu.setSize(  ppg.getWidth()*50,ppg.getHeight()*50);
+		//fenetreJeu.setBounds(0,0, m.getSizeX(),m.getSizeY());
 		
         fenetreJeu.add(ppg);
+        
+        System.out.println("size X: "+ fenetreJeu.getWidth() +", size Y : "+fenetreJeu.getHeight());
+        
+        
+       
 	}
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		
+		System.out.println("+++++++++++++UPDATE+++++++++++++++");
+			
 		fenetreJeu.repaint();
 	}
 	
