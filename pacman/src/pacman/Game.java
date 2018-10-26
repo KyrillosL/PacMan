@@ -49,7 +49,7 @@ public abstract class Game implements Runnable, Sujet {
 		maxTour=mt; 
 
         try {
-			maze = new Maze("layouts/mediumClassic_fivePacmans.lay");
+			maze = new Maze("layouts/originalClassic.lay");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -72,7 +72,7 @@ public abstract class Game implements Runnable, Sujet {
 			takeTurn(); 
 			nbTour++;
 			//notifyObserver(); 
-			//Thread.sleep(2000);
+			Thread.sleep(2);
 			
 		}
 		else {
