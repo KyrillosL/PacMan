@@ -1,4 +1,8 @@
-package pacman;
+package com.pacman.vue;
+
+import com.pacman.*;
+import com.pacman.agent.PositionAgent;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;

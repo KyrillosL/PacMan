@@ -1,10 +1,16 @@
-package pacman;
+package com.pacman.modele;
+
 
 import java.util.ArrayList;
 
-
-
-import pacman.AgentAction.EnumAction;
+import com.pacman.agent.Agent;
+import com.pacman.agent.AgentAction;
+import com.pacman.agent.AgentAction.EnumAction;
+import com.pacman.agent.PacmanAgent;
+import com.pacman.agent.PositionAgent;
+import com.pacman.vue.Maze;
+import com.pacman.vue.PanelPacmanGame;
+import com.pacman.*;
 
 public class PacmanGame extends Game {
 	

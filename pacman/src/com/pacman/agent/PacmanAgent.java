@@ -1,4 +1,4 @@
-package pacman;
+package com.pacman.agent;
 
 public class PacmanAgent extends Agent {
 

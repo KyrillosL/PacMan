@@ -1,4 +1,7 @@
-package pacman;
+package com.pacman.vue;
+import com.pacman.*;
+import com.pacman.agent.PositionAgent;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;

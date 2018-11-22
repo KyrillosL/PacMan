@@ -1,4 +1,7 @@
-package pacman;
+package com.pacman.controleur;
+
+import com.pacman.*;
+import com.pacman.modele.Game;
 
 public class ControleurBasique implements ControleurGame {
 

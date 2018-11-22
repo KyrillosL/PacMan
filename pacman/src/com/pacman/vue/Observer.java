@@ -1,4 +1,4 @@
-package pacman;
+package com.pacman.vue;
 
 public interface Observer {
 

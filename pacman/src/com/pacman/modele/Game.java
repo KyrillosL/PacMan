@@ -1,5 +1,5 @@
-package pacman;
-
+package com.pacman.modele;
+import com.pacman.vue.*;
 import java.util.ArrayList;
 
 public abstract class Game implements Runnable, Sujet {
@@ -21,13 +21,13 @@ public abstract class Game implements Runnable, Sujet {
 	}
 	
 	
-	@Override
+
 	public void registerObserver(Observer o) {
 		// TODO Auto-generated method stub
 		obs.add(o);
 	}
 
-	@Override
+
 	public void removeObserver(Observer o) {
 		// TODO Auto-generated method stub
 		obs.remove(o);
@@ -58,7 +58,7 @@ public abstract class Game implements Runnable, Sujet {
 		}
 	}
 	
-	protected void init() {
+	public void init() {
 		
 		
 		isRunning=false; 
@@ -81,7 +81,7 @@ public abstract class Game implements Runnable, Sujet {
 		 
 	}
 	
-	protected void step() throws InterruptedException {
+	public void step() throws InterruptedException {
 		//System.out.println("Step Game ");
 		isRunning=true; 
 		if (!termine) {
@@ -110,7 +110,7 @@ public abstract class Game implements Runnable, Sujet {
 		}
 		gameOver();
 	}
-	protected void stop() {
+	public void stop() {
 		isRunning=false; 
 		System.out.println("STOP");
 		notifyObserver(); 

@@ -1,4 +1,4 @@
-package pacman;
+package com.pacman.controleur;
 
 public interface ControleurGame {
 

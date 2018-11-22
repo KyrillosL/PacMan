@@ -1,5 +1,9 @@
 package pacman;
 
+import com.pacman.controleur.ControleurAvance;
+import com.pacman.modele.Game;
+import com.pacman.modele.PacmanGame;
+
 public class Main {
 	
 	

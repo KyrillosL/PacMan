@@ -1,4 +1,8 @@
-package pacman;
+package com.pacman.vue;
+import com.pacman.*;
+import com.pacman.controleur.ControleurGame;
+import com.pacman.modele.Game;
+
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
@@ -13,10 +17,10 @@ import javax.swing.JButton;
 
 public class View implements Observer {
 	
-	protected JButton restart; 
-	protected JButton pause; 
+	public JButton restart; 
+	public JButton pause; 
 	protected JButton step;
-	protected JButton run; 
+	public JButton run; 
 	protected JFrame fenetreJeu;
 	PanelPacmanGame ppg;
 	Game game; 

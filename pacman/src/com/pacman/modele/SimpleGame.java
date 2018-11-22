@@ -1,5 +1,6 @@
-package pacman;
-
+package com.pacman.modele;
+import com.pacman.*;
+import com.pacman.vue.Maze;
 public class SimpleGame extends Game {
 
 	SimpleGame(int mt) {

@@ -1,8 +1,8 @@
-package pacman;
+package com.pacman.agent;
 
 public class AgentAction {
 
-	enum EnumAction {haut, bas, droite, gauche};
+	public enum EnumAction {haut, bas, droite, gauche};
 
 	EnumAction action;
 
@@ -13,7 +13,7 @@ public class AgentAction {
 		
 	}
 	
-	String getAction() {
+	public String getAction() {
 		
 		return action.name(); 
 	}

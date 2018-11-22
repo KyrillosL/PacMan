@@ -1,5 +1,4 @@
-package pacman;
-
+package com.pacman.agent;
 public class PositionAgent {
 	
 	private int x;

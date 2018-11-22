@@ -1,4 +1,8 @@
-package pacman;
+package com.pacman.controleur;
+
+import com.pacman.*;
+import com.pacman.modele.Game;
+import com.pacman.vue.View;
 
 public class ControleurAvance implements ControleurGame {
 

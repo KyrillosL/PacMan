@@ -1,8 +1,10 @@
-package pacman;
+package com.pacman.agent;
+
+import com.pacman.agent.*;
 
 public abstract class Agent {
 	
-	PositionAgent position; 
+	public PositionAgent position; 
 	
 	 public Agent(PositionAgent pos) {
 		position = pos; 
