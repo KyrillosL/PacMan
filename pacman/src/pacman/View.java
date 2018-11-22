@@ -133,7 +133,18 @@ public class View implements Observer {
 		});
 	    restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
+				//ppg = null; 
+				fenetreJeu.remove(ppg);
+
 				controleur.init();
+				ppg = game.getPpg(); 
+				System.out.println(ppg.toString());
+				fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
+		        fenetreJeu.add(ppg);
+		        fenetreJeu.setVisible(true);
+		        
 				
 			}
 		});
@@ -165,7 +176,7 @@ public class View implements Observer {
 
 	public void setPanel(PanelPacmanGame p ) {
 		
-		
+		/*
 		ppg = p; 
 		
 		
@@ -177,14 +188,14 @@ public class View implements Observer {
         fenetreJeu.add(ppg);
         
         System.out.println("size X: "+ fenetreJeu.getWidth() +", size Y : "+fenetreJeu.getHeight());
-        
+        */
         
        
 	}
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		System.out.println("+++++++++++++UPDATE+++++++++++++++");
+		//System.out.println("+++++++++++++UPDATE+++++++++++++++");
 			
 		fenetreJeu.repaint();
 	}
