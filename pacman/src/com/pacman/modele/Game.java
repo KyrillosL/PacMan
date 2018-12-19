@@ -1,5 +1,9 @@
 package com.pacman.modele;
+import com.pacman.agent.PositionAgent;
 import com.pacman.vue.*;
+
+import ia.IA;
+
 import java.util.ArrayList;
 
 public abstract class Game implements Runnable, Sujet {
@@ -68,6 +72,12 @@ public abstract class Game implements Runnable, Sujet {
 			//maze = new Maze("layouts/originalClassic.lay");
 			maze = null; 
         	maze = new Maze("layouts/capsuleClassic.lay");
+        	
+        	PositionAgent pos1=new PositionAgent(1, 1, 1);
+    		PositionAgent pos2=new PositionAgent(1, 1, 1);
+    		
+    		System.out.println("TEST IA: " +IA.A_Star(maze, pos1, pos2));
+    		
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
