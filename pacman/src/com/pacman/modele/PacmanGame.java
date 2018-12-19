@@ -3,6 +3,8 @@ package com.pacman.modele;
 
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
 import com.pacman.agent.AgentAction.EnumAction;
@@ -14,6 +16,21 @@ import com.pacman.*;
 
 public class PacmanGame extends Game {
 	
+
+	EtatJeu capsuleNonActive; 
+	EtatJeu capsuleActive;
+	EtatJeu etatJeu = capsuleNonActive; 
+	
+	
+	
+	EtatPacman etatPacmanNormal; 
+	EtatPacman etatPacmanBoost;
+	EtatPacman etatPacman = etatPacmanNormal; 
+	
+	
+	EtatFantomes etatFantomesNormal; 
+	EtatFantomes etatFantomesApeure;
+	EtatFantomes etatFantomes = etatFantomesNormal; 
 	
 	
 	PanelPacmanGame ppg ;
@@ -25,7 +42,14 @@ public class PacmanGame extends Game {
 	
 	public PacmanGame(int mt) {
 		super(mt);
-		// TODO Auto-generated constructor stub
+		capsuleNonActive = new CapsuleNonActive(this); 
+		capsuleActive = new CapsuleActive(this); 
+		
+		etatPacmanNormal = new EtatPacmanNormal(this); 
+		etatPacmanBoost = new EtatPacmanBoost(this); 
+		
+		etatFantomesNormal = new EtatFantomeNormal(this); 
+		etatFantomesApeure = new EtatFantomeApeure(this); 
 	}
 
 	
@@ -82,6 +106,16 @@ public class PacmanGame extends Game {
 		//System.out.println("AVANT TAKE TURN");
 		// TODO Auto-generated method stub
 		
+		if (etatJeu == capsuleNonActive) {
+			etatFantomes = etatFantomesNormal; 
+			etatPacman = etatPacmanNormal; 
+		}
+		else {
+			etatPacman = etatPacmanBoost; 
+			etatFantomes = etatFantomesApeure;  
+		}
+		
+		
 		if (fantomes.size()==0 || pacmans.size()==0) {
 			System.out.println("P: "+ pacmans.size()+ ", F: "+fantomes.size());
 			gameOver(); 
@@ -90,53 +124,61 @@ public class PacmanGame extends Game {
 		ArrayList<PositionAgent> apa = new ArrayList<PositionAgent>();
 		ArrayList<PositionAgent> paf = new ArrayList<PositionAgent>();
 	
-		timer--; 
-
+		//timer--; 
+		if (timer <=0) {
+			etatJeu = capsuleNonActive; 
+		}
+		
 		
 		for ( Agent f : fantomes) {
 			moveAgent(f,getAction(f,maze) );
-			if (0>=timer) {
-				
+
+			if (etatJeu == capsuleNonActive) {
+
 				if (pacmans.removeIf(p -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))){
 					System.out.println("J'ai mangé pacman");
 				}
+
 			}
-			
+
 			paf.add(f.position);
 		}
+		
+		
+		
+		
+		
 		
 		for ( Agent p : pacmans) {
 			//System.out.println("position pacman avant: " + p.position.getY());
 			moveAgent(p,getAction(p,maze) );
-			
+	
 			if (maze.isFood(p.position.getX(), p.position.getY())) {
 				maze.setFood(p.position.getX(), p.position.getY(), false); 
 			}
 			
 			if (maze.isCapsule(p.position.getX(), p.position.getY())){
-				timer=500; 
+				timer=500;
+				etatJeu = capsuleActive; 
+
 				maze.setCapsule(p.position.getX(), p.position.getY(), false); 
-			}
-			
-			if (timer >0) {
-				
+			}		
+			if (etatJeu == capsuleActive) {
+
+
 				if (fantomes.removeIf(f -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))) {
 					System.out.println("J'ai mangé un fantome");
 				}
+
 				
 			}
+			//etatPacman.deplacer(p);
 
-			
 			apa.add(p.position);
 			
 		}
 		
-		
 
-		
-
-		
-		
 
 		ppg.setPacmans_pos(apa);
 		
