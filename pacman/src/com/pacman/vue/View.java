@@ -294,6 +294,15 @@ public class View implements Observer {
 				controleur.setMap(listeTerrains.getSelectedItem().toString()+".lay");
 				//System.out.println("STEP");
 				
+				fenetreJeu.remove(ppg);
+
+				controleur.init();
+				ppg = game.getPpg(); 
+				System.out.println(ppg.toString());
+				fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
+		        fenetreJeu.add(ppg);
+		        fenetreJeu.setVisible(true);
+				
 			}
 		});
         

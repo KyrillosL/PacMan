@@ -1,5 +1,4 @@
 package com.pacman.agent;
-
 import java.util.ArrayList;
 
 import javax.swing.text.Position;
@@ -42,8 +41,7 @@ public class PositionAgent {
 	public void setDir(int dir) {
 		this.dir = dir;
 	}
-	
-	public boolean coordonneesEgales(PositionAgent posAgent) {
+		public boolean coordonneesEgales(PositionAgent posAgent) {
 		return (this.x==posAgent.x)&&(this.y==posAgent.y);
 		
 	}
@@ -63,6 +61,5 @@ public class PositionAgent {
 		return voisins;
 		
 	}
-	
 	
 }
