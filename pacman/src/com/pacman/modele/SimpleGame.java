@@ -33,6 +33,12 @@ public class SimpleGame extends Game {
 		return null;
 	}
 
+	@Override
+	public void setGameMode(String gm) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

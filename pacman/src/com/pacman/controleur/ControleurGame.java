@@ -10,4 +10,8 @@ public interface ControleurGame {
 
 	void stop();
 	
+	
+	void setTourParSeconde(int valeur);
+	void setGameMode(String valeur);
+	
 }

@@ -3,6 +3,10 @@ import com.pacman.*;
 import com.pacman.controleur.ControleurGame;
 import com.pacman.modele.Game;
 
+import event.KeyEvent;
+
+import java.awt.Button;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
@@ -10,9 +14,12 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
-import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class View implements Observer {
@@ -24,10 +31,18 @@ public class View implements Observer {
 	protected JFrame fenetreJeu;
 	PanelPacmanGame ppg;
 	Game game; 
+	JTextArea tour;
+	JCheckBox bCom;
+	JCheckBox bPlayer;
 	
 	public View(ControleurGame controleur, Game g ) throws Exception{
 		
 		game = g; 
+		
+		
+
+        
+        
 		
 		JFrame commande = new JFrame();
 		commande.setTitle("Commande");
@@ -40,6 +55,10 @@ public class View implements Observer {
         int dx = centerPoint.x - windowSize.width / 2 ;
         int dy = centerPoint.y - windowSize.height / 2 - 300; 
         commande.setLocation(dx, dy);
+        
+
+        
+    
         
 
         
@@ -69,15 +88,71 @@ public class View implements Observer {
 				
 		
 		GridLayout sliderAndText = new GridLayout(1,2);
+		JPanel sliderAndLabel = new JPanel();
+				
+				
 		JPanel panelSliderAndText = new JPanel();
-		JSlider tourParSeconde = new JSlider(0, 1, 10, 5);
-		JTextArea tour = new JTextArea("Tour"); 
-		panelSliderAndText.add(tourParSeconde);
-		panelSliderAndText.add(tour);
+		JSlider tourParSeconde = new JSlider(0, 0, 50, 2);
+		tourParSeconde.setMajorTickSpacing(10);
+		tourParSeconde.setMinorTickSpacing(1);
+		tourParSeconde.setPaintTicks(true);
+		tourParSeconde.setSnapToTicks(true);
+		tourParSeconde.setPaintLabels(true);
+		
+		JLabel vitesse = new JLabel("Vitesse du jeu", SwingConstants.CENTER);
+		
+		Color c = panelSliderAndText.getBackground();
+		
+		tour = new JTextArea("Tour"); 
+		tour.setBackground(c);
+		
+		
+		
+
+		
+		
+		JTextArea player = new JTextArea("Mode de Jeu");
+		player.setBackground(c);
+		
+		
+		JPanel gameMode = new JPanel();
+		ButtonGroup bGameMode = new ButtonGroup();
+		
+		bCom = new JCheckBox("Com");
+		bPlayer = new JCheckBox("Player");
+		bCom.setSelected(true);
+		 
+
+		bGameMode.add(bCom);
+		bGameMode.add(bPlayer);
+		
+		gameMode.setLayout(new GridLayout(3,1));
+		
+
+		
+		gameMode.add(player);
+		
+		gameMode.add(bCom);
+		gameMode.add(bPlayer);
+		panelSliderAndText.add(gameMode);
+		
+		
+		
+		sliderAndLabel.add(tour);
+		sliderAndLabel.add(tourParSeconde); 
+		sliderAndLabel.add(vitesse);
+
+		sliderAndLabel.setLayout(new GridLayout(3,1));
+		
+		panelSliderAndText.add(sliderAndLabel);
+		
+
+
+
 		panelSliderAndText.setLayout(sliderAndText);
+
 		
-		
-		
+
 		
 		
 		GridLayout all = new GridLayout(2,1);
@@ -90,8 +165,17 @@ public class View implements Observer {
         
         
 	    fenetreJeu = new JFrame();
+		KeyEvent ke = new KeyEvent(game); 
+		fenetreJeu.addKeyListener(ke);
+
+		
+	    
 	    fenetreJeu.setTitle("JEU");
 	    fenetreJeu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    //fenetreJeu.setFocusable(true);
+	    //fenetreJeu.requestFocus();
+        
+        //ke.addWindowListener(commande.getWindowStateListeners());
 	    
 	    
 	    fenetreJeu.setSize(new Dimension(1000, 1000));
@@ -108,6 +192,8 @@ public class View implements Observer {
         
         
         
+        
+        
 /*
         ppg = new PanelPacmanGame(game.maze); 
 		
@@ -121,11 +207,11 @@ public class View implements Observer {
 */
         
 		ppg = game.getPpg(); 
-
 		fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
-
 		
+
         fenetreJeu.add(ppg);
+
         
 
         
@@ -165,11 +251,34 @@ public class View implements Observer {
 				
 			}
 		});
+	    
+	    bCom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controleur.setGameMode("com");
+				//System.out.println("STEP");
+				
+			}
+		});
+	    
+	    bPlayer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-	  
-	   // game.setPositionPacmans(ppg.getPacmans_pos());
-	    
-	    
+				controleur.setGameMode("player");
+				//System.out.println("STEP");
+				
+			}
+		});
+
+	    tourParSeconde.addChangeListener(new ChangeListener(){
+	          public void stateChanged(ChangeEvent e) {
+	        	  try {
+	        		  controleur.setTourParSeconde(1000/tourParSeconde.getValue()) ;
+	        	  }
+	        	  catch(Exception exception) {
+	        		  
+	        	  }
+	          }
+		});
 	    
 
         
@@ -200,7 +309,7 @@ public class View implements Observer {
 	public void update() {
 		// TODO Auto-generated method stub
 		//System.out.println("+++++++++++++UPDATE+++++++++++++++");
-			
+		tour.setText("Tour "+game.getNbTour());
 		fenetreJeu.repaint();
 	}
 	

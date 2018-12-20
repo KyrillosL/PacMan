@@ -71,6 +71,19 @@ public class ControleurAvance implements ControleurGame {
 
 	}
 
+	@Override
+	public void setTourParSeconde(int valeur) {
+		// TODO Auto-generated method stub
+		game.setVitesse(valeur);
+		System.out.println("valeur: " +valeur);
+		
+	}
+	
+	public void setGameMode(String gm) {
+		game.setGameMode(gm);
+	}
+
+
 }
 
 

@@ -321,4 +321,13 @@ public class PacmanGame extends Game {
 		
 	}
 
+
+
+
+	@Override
+	public void setGameMode(String gm) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
