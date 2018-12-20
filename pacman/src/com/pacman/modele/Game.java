@@ -74,7 +74,7 @@ public abstract class Game implements Runnable, Sujet {
         	maze = new Maze("layouts/capsuleClassic.lay");
         	
         	PositionAgent pos1=new PositionAgent(1, 1, 1);
-    		PositionAgent pos2=new PositionAgent(1, 1, 1);
+    		PositionAgent pos2=new PositionAgent(17, 5, 1);
     		
     		System.out.println("TEST IA: " +IA.A_Star(maze, pos1, pos2));
     		

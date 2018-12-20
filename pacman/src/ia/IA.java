@@ -122,16 +122,18 @@ public class IA {
 
     	Maze maze=null;
 		try {
-			maze = new Maze("layouts/testMaze.lay");
+			maze = new Maze("layouts/capsuleClassic.lay");
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		}
 
-		PositionAgent depart= new PositionAgent(1, 1, 1);
-		PositionAgent but= new PositionAgent(1, 2, 1);
+		PositionAgent depart= new PositionAgent(1, 1, 1);		
+		
+		
+		PositionAgent but= new PositionAgent(12, 5, 1);
 		System.out.println("TEST IA: " +IA.A_Star(maze, depart, but));
-
+		
 
 	}
 	

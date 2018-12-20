@@ -49,13 +49,17 @@ public class PositionAgent {
 	}
 	public ArrayList<PositionAgent> getVoisins(Maze maze){
 		ArrayList<PositionAgent> voisins = new ArrayList<>();
-		for( int i = this.x-1 ; i <= this.x+1 ; i = i+2 ) {
-			for( int j= this.y-1 ; j <= this.y+1 ; j = j+2 ) {
+		
 				//test si coordonnée dans labyrinthe et si ce n'est pas un mur--> si case accessible
-				if(( i >= 0 ) && ( j>=0 ) && ( i < maze.getSizeX() ) && ( j < maze.getSizeY()) && ( !maze.isWall(i, j) ))	
-					voisins.add(new PositionAgent(i, j, this.dir));
-			}
-		}
+				if(( this.x-1 >= 0 ) && ( this.y>=0 ) && ( this.x-1 < maze.getSizeX() ) && ( this.y < maze.getSizeY()) && ( !maze.isWall(this.x-1, this.y) ))	
+					voisins.add(new PositionAgent(this.x-1, this.y, this.dir));
+				if(( this.x >= 0 ) && ( this.y-1>=0 ) && ( this.x < maze.getSizeX() ) && ( this.y-1 < maze.getSizeY()) && ( !maze.isWall(this.x, this.y-1) ))	
+					voisins.add(new PositionAgent(this.x, this.y-1, this.dir));
+				if(( this.x+1 >= 0 ) && ( this.y>=0 ) && ( this.x+1-1 < maze.getSizeX() ) && ( this.y < maze.getSizeY()) && ( !maze.isWall(this.x+1, this.y) ))	
+					voisins.add(new PositionAgent(this.x+1, this.y, this.dir));
+				if(( this.x >= 0 ) && ( this.y+1 >=0 ) && ( this.x < maze.getSizeX() ) && ( this.y+1 < maze.getSizeY()) && ( !maze.isWall(this.x, this.y+1) ))	
+					voisins.add(new PositionAgent(this.x, this.y+1, this.dir));
+			
 		return voisins;
 		
 	}
