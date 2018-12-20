@@ -18,6 +18,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -34,6 +35,7 @@ public class View implements Observer {
 	JTextArea tour;
 	JCheckBox bCom;
 	JCheckBox bPlayer;
+	JComboBox listeTerrains;
 	
 	public View(ControleurGame controleur, Game g ) throws Exception{
 		
@@ -58,7 +60,7 @@ public class View implements Observer {
         
 
         
-    
+        
         
 
         
@@ -87,11 +89,11 @@ public class View implements Observer {
 		
 				
 		
-		GridLayout sliderAndText = new GridLayout(1,2);
+
 		JPanel sliderAndLabel = new JPanel();
 				
 				
-		JPanel panelSliderAndText = new JPanel();
+		JPanel bottom = new JPanel();
 		JSlider tourParSeconde = new JSlider(0, 0, 50, 2);
 		tourParSeconde.setMajorTickSpacing(10);
 		tourParSeconde.setMinorTickSpacing(1);
@@ -101,7 +103,7 @@ public class View implements Observer {
 		
 		JLabel vitesse = new JLabel("Vitesse du jeu", SwingConstants.CENTER);
 		
-		Color c = panelSliderAndText.getBackground();
+		Color c = bottom.getBackground();
 		
 		tour = new JTextArea("Tour"); 
 		tour.setBackground(c);
@@ -134,22 +136,28 @@ public class View implements Observer {
 		
 		gameMode.add(bCom);
 		gameMode.add(bPlayer);
-		panelSliderAndText.add(gameMode);
+		bottom.add(gameMode);
+		
+		
+		String[] petStrings = { "capsuleClassic", "bigCorners"};
+		
+		
+		listeTerrains = new JComboBox(petStrings);
+		listeTerrains.setSelectedIndex(0);
+		//listeTerrains.addActionListener(this);
+		bottom.add(listeTerrains);
+		
 		
 		
 		
 		sliderAndLabel.add(tour);
 		sliderAndLabel.add(tourParSeconde); 
 		sliderAndLabel.add(vitesse);
-
 		sliderAndLabel.setLayout(new GridLayout(3,1));
 		
-		panelSliderAndText.add(sliderAndLabel);
-		
+		bottom.add(sliderAndLabel);
 
-
-
-		panelSliderAndText.setLayout(sliderAndText);
+		bottom.setLayout(new GridLayout(1,1));
 
 		
 
@@ -157,7 +165,7 @@ public class View implements Observer {
 		
 		GridLayout all = new GridLayout(2,1);
 		commande.add(panelBoutons);
-		commande.add(panelSliderAndText);
+		commande.add(bottom);
 		commande.setLayout(all);		
         commande.setVisible(true);
         
@@ -280,7 +288,14 @@ public class View implements Observer {
 	          }
 		});
 	    
-
+     listeTerrains.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(listeTerrains.getSelectedItem().toString());
+				controleur.setMap(listeTerrains.getSelectedItem().toString()+".lay");
+				//System.out.println("STEP");
+				
+			}
+		});
         
 	    
 		
