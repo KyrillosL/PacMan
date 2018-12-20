@@ -1,5 +1,6 @@
 /.classpath
 /.project
-/pacman/
 /com/
 /event/
+/ia/
+/pacman/
