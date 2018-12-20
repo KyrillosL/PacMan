@@ -43,4 +43,19 @@ public class ControleurBasique implements ControleurGame {
 		game.stop();
 	}
 
+	@Override
+	public void setTourParSeconde(int valeur) {
+		// TODO Auto-generated method stub
+		game.setVitesse(valeur);
+
+		
+	}
+	@Override
+	public void setGameMode(String valeur) {
+		// TODO Auto-generated method stub
+		game.setGameMode(valeur);
+
+		
+	}
+
 }

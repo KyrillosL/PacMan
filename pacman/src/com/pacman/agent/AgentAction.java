@@ -2,7 +2,7 @@ package com.pacman.agent;
 
 public class AgentAction {
 
-	public enum EnumAction {haut, bas, droite, gauche};
+	public enum EnumAction {haut, bas, droite, gauche, vide};
 
 	EnumAction action;
 

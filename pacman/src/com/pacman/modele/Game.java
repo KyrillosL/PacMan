@@ -1,4 +1,5 @@
 package com.pacman.modele;
+import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.vue.*;
 import java.util.ArrayList;
 
@@ -6,9 +7,13 @@ public abstract class Game implements Runnable, Sujet {
 	
 	ArrayList<Observer> obs= new ArrayList<Observer> ();
 	
-	 Thread thread;  
+	Thread thread;  
+	int vitesseJeu=200; 
+
 	 
-		public Maze maze; 
+	public Maze maze; 
+	
+	
 	 
     public void launch(){  
         thread = new Thread(this);    
@@ -88,7 +93,7 @@ public abstract class Game implements Runnable, Sujet {
 			takeTurn(); 
 			nbTour++;
 			//notifyObserver(); 
-			Thread.sleep(2);
+			Thread.sleep(vitesseJeu);
 			
 		}
 		else {
@@ -116,6 +121,14 @@ public abstract class Game implements Runnable, Sujet {
 		notifyObserver(); 
 	}
 	
+	public void setVitesse(int value) {
+		this.vitesseJeu = value; 
+	}
+	
+	public int getNbTour() {
+		return this.nbTour;
+	}
+	
 	protected int nbTour;
 	protected int maxTour; 
 	protected boolean termine=false;
@@ -127,6 +140,8 @@ public abstract class Game implements Runnable, Sujet {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public abstract void setGameMode(String gm);
 
 
 
