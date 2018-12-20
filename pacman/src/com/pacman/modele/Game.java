@@ -11,7 +11,7 @@ public abstract class Game implements Runnable, Sujet {
 	int vitesseJeu=200; 
 
 	 
-	public Maze maze; 
+	public Maze maze;
 	
 	
 	 
@@ -55,12 +55,13 @@ public abstract class Game implements Runnable, Sujet {
 
         try {
 			//maze = new Maze("layouts/originalClassic.lay");
-        	//maze = new Maze("layouts/capsuleClassic.lay");
+        	maze = new Maze("layouts/capsuleClassic.lay");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void init() {
@@ -71,8 +72,8 @@ public abstract class Game implements Runnable, Sujet {
 		
 		try {
 			//maze = new Maze("layouts/originalClassic.lay");
-			maze = null; 
-        	maze = new Maze("layouts/capsuleClassic.lay");
+			//maze = null; 
+        	//maze = new Maze("layouts/capsuleClassic.lay");
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -142,6 +143,17 @@ public abstract class Game implements Runnable, Sujet {
 	}
 	
 	public abstract void setGameMode(String gm);
+	public void setMaze(String name) {
+		try {
+			maze = new Maze("layouts/" + name);
+			System.out.println(maze.toString());
+			init();
+	
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 

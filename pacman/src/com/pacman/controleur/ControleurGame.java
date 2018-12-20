@@ -13,5 +13,6 @@ public interface ControleurGame {
 	
 	void setTourParSeconde(int valeur);
 	void setGameMode(String valeur);
+	void setMap(String valeur);
 	
 }

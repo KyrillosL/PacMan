@@ -58,4 +58,11 @@ public class ControleurBasique implements ControleurGame {
 		
 	}
 
+	@Override
+	public void setMap(String valeur) {
+		// TODO Auto-generated method stub
+		game.setMaze(valeur);
+		
+	}
+
 }

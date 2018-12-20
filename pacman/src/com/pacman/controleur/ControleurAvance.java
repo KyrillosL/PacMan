@@ -83,6 +83,12 @@ public class ControleurAvance implements ControleurGame {
 		game.setGameMode(gm);
 	}
 
+	@Override
+	public void setMap(String valeur) {
+		// TODO Auto-generated method stub
+		game.setMaze(valeur);
+	}
+
 
 }
 
