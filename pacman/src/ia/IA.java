@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.lang.model.element.Element;
+
 import com.pacman.agent.PositionAgent;
 import com.pacman.vue.Maze;
 
@@ -17,6 +19,13 @@ public class IA {
 		    int dx = Math.abs(noeud.getX() - but.getX());
 		    int dy = Math.abs(noeud.getY() - but.getY());
 		    return (dx + dy);
+	}
+	public static boolean contient(ArrayList<PositionAgent> set,PositionAgent pos) {
+		for( PositionAgent element : set) {
+			if (element.coordonneesEgales(pos))
+				return true;
+		}
+		return false;
 	}
 	
 	public static int A_Star(Maze maze,PositionAgent depart,PositionAgent but) {
@@ -84,7 +93,7 @@ public class IA {
 	
 	        openSet.remove(positionDansOpenset);
 	        closedSet.add(posMin);
-			//System.out.println("ERREUR ICI");
+			System.out.println("ERREUR ICI");
 
 	        ArrayList<PositionAgent> voisins =posMin.getVoisins(maze);
 
@@ -92,12 +101,12 @@ public class IA {
 	        
 	        for(PositionAgent voisin : voisins) {
 
-	        	if(closedSet.contains(voisin))
+	        	if(contient(closedSet,voisin))
 	        		continue;
 	        	
 	        	gscoreTentative= gScore.get(posMin) + DISTANCE_ENTRE_CASES;		
 	        	
-	        	if(! openSet.contains(voisin))
+	        	if(! contient(openSet,voisin))
 	        		openSet.add(voisin);		// ajout dans positions découvertes à évaluer
 	        	
 	        	cameFrom.put(voisin, posMin);
@@ -115,11 +124,12 @@ public class IA {
 		try {
 			maze = new Maze("layouts/testMaze.lay");
 		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 
-		PositionAgent depart= new PositionAgent(4, 4, 1);
-		PositionAgent but= new PositionAgent(4, 4, 1);
+		PositionAgent depart= new PositionAgent(1, 1, 1);
+		PositionAgent but= new PositionAgent(1, 2, 1);
 		System.out.println("TEST IA: " +IA.A_Star(maze, depart, but));
 
 
