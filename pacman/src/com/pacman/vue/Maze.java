@@ -126,6 +126,7 @@ public class Maze implements Serializable{
 		assert((y>=0) && (y<size_y));
 		return(walls[x][y]);
 	}
+
 	
 	/**
 	 * Permet de savoir si il y a de la nourriture

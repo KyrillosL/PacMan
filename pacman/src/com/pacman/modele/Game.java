@@ -1,6 +1,10 @@
 package com.pacman.modele;
+import com.pacman.agent.PositionAgent;
 import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.vue.*;
+
+import ia.IA;
+
 import java.util.ArrayList;
 
 public abstract class Game implements Runnable, Sujet {
@@ -72,8 +76,10 @@ public abstract class Game implements Runnable, Sujet {
 		
 		try {
 			//maze = new Maze("layouts/originalClassic.lay");
+
 			//maze = null; 
         	//maze = new Maze("layouts/capsuleClassic.lay");
+
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
