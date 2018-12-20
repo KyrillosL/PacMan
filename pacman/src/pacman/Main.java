@@ -3,7 +3,7 @@ package pacman;
 import com.pacman.controleur.ControleurAvance;
 import com.pacman.modele.Game;
 import com.pacman.modele.PacmanGame;
-import com.pacman.modele.PlayerGame;
+import com.pacman.modele.PacmanGame;
 
 public class Main {
 	
@@ -14,7 +14,7 @@ public class Main {
 	       //jeu.run();
 		  
 		  //Game jeu = new PacmanGame(100000000); 
-		  Game jeu = new PlayerGame(100000000); 
+		  Game jeu = new PacmanGame(100000000); 
 		  jeu.init();
 		  ControleurAvance controleur = new ControleurAvance(jeu);
 		  

@@ -42,6 +42,7 @@ public class ControleurAvance implements ControleurGame {
 	public void init() {
 		// TODO Auto-generated method stub
 		game.init(); 
+		
 		view.restart.setEnabled(false);
 		view.pause.setEnabled(true);
 		view.run.setEnabled(true);

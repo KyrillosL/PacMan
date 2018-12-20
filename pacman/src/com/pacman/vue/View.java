@@ -233,9 +233,9 @@ public class View implements Observer {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				//ppg = null; 
+				//
 				fenetreJeu.remove(ppg);
-
+				//ppg = null; 
 				controleur.init();
 				ppg = game.getPpg(); 
 				System.out.println(ppg.toString());

@@ -38,6 +38,7 @@ public class SimpleGame extends Game {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 
 

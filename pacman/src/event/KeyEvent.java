@@ -8,12 +8,12 @@ import javax.swing.*;
 
 import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.modele.Game;
-import com.pacman.modele.PlayerGame;
+import com.pacman.modele.PacmanGame;
  
 public class KeyEvent extends JFrame implements KeyListener, ActionListener
 {
 
-	PlayerGame pg; 
+	PacmanGame pg; 
 	EnumAction action ;
     JTextArea displayArea;
     JTextField typingArea;
@@ -21,7 +21,7 @@ public class KeyEvent extends JFrame implements KeyListener, ActionListener
      
     
     public KeyEvent(Game game) {
-		this.pg =(PlayerGame) game; 
+		this.pg =(PacmanGame) game; 
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -1,8 +1,6 @@
 package com.pacman.modele;
 import com.pacman.agent.AgentAction.EnumAction;
-import com.pacman.agent.PositionAgent;
 import com.pacman.vue.*;
-import ia.IA;
 import java.util.ArrayList;
 
 public abstract class Game implements Runnable, Sujet {
@@ -14,6 +12,7 @@ public abstract class Game implements Runnable, Sujet {
 
 	 
 	public Maze maze;
+	private String mazeString;
 	
 	
 	 
@@ -24,7 +23,8 @@ public abstract class Game implements Runnable, Sujet {
     }
 	public Maze getMaze() {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return maze;
 	}
 	
 	
@@ -58,6 +58,7 @@ public abstract class Game implements Runnable, Sujet {
         try {
 			//maze = new Maze("layouts/originalClassic.lay");
         	maze = new Maze("layouts/capsuleClassic.lay");
+        	mazeString= "layouts/capsuleClassic.lay";
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -74,8 +75,8 @@ public abstract class Game implements Runnable, Sujet {
 		
 		try {
 			//maze = new Maze("layouts/originalClassic.lay");
-			//maze = null; 
-        	//maze = new Maze("layouts/capsuleClassic.lay");
+			maze = null; 
+        	maze = new Maze(mazeString);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -141,13 +142,15 @@ public abstract class Game implements Runnable, Sujet {
 	abstract void gameOver();
 	public PanelPacmanGame getPpg() {
 		// TODO Auto-generated method stub
+		System.out.println("dans le mauvais ppg");
 		return null;
 	}
 	
 	public abstract void setGameMode(String gm);
-	public void setMaze(String name) {
+	public  void setMaze(String name) {
 		try {
-			maze = new Maze("layouts/" + name);
+			//maze = new Maze("layouts/" + name);
+			mazeString = "layouts/" + name;
 			System.out.println(maze.toString());
 			init();
 	
@@ -156,6 +159,7 @@ public abstract class Game implements Runnable, Sujet {
 			e.printStackTrace();
 		}
 	}
+	
 
 
 

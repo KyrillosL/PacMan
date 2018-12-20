@@ -1,6 +1,7 @@
 package com.pacman.modele;
 
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
@@ -17,6 +18,7 @@ import com.pacman.*;
 public class PacmanGame extends Game {
 	
 
+	
 	EtatJeu capsuleNonActive; 
 	EtatJeu capsuleActive;
 	EtatJeu etatJeu = capsuleNonActive; 
@@ -32,6 +34,16 @@ public class PacmanGame extends Game {
 	EtatFantomes etatFantomesApeure;
 	EtatFantomes etatFantomes = etatFantomesNormal; 
 	
+	Strategie strategieRandom = new StrategieRandom();
+	Strategie strategiePlayer = new StrategiePlayer();
+	
+	Strategie strategiePacman; 
+	Strategie strategieFantome; 
+	
+	AgentAction actionPrecedente; 
+	EnumAction enumAction = EnumAction.vide;
+
+	String gameMode ="com"; 
 	
 	PanelPacmanGame ppg ;
 	public ArrayList<Agent> pacmans; 
@@ -42,6 +54,7 @@ public class PacmanGame extends Game {
 	
 	public PacmanGame(int mt) {
 		super(mt);
+		
 		capsuleNonActive = new CapsuleNonActive(this); 
 		capsuleActive = new CapsuleActive(this); 
 		
@@ -50,6 +63,10 @@ public class PacmanGame extends Game {
 		
 		etatFantomesNormal = new EtatFantomeNormal(this); 
 		etatFantomesApeure = new EtatFantomeApeure(this); 
+		
+		strategiePacman = strategiePlayer; 
+		strategieFantome = strategieRandom; 
+		
 	}
 
 	
@@ -60,6 +77,10 @@ public class PacmanGame extends Game {
 	}
 	
 
+	public void setGameMode(String gm) {
+		this.gameMode= gm;
+		
+	}
 	
 	public PanelPacmanGame getPpg() {
 		
@@ -69,7 +90,7 @@ public class PacmanGame extends Game {
 	public void initializeGame() {
 		// TODO Auto-generated method stub
 
-		
+		System.out.println("INIT");
 		ppg=null; 
 		ppg= new PanelPacmanGame(maze);
 		
@@ -89,8 +110,6 @@ public class PacmanGame extends Game {
 		fantomes = new ArrayList <Agent>(); 
 		fantomes.clear();
 		
-		//ArrayList<PositionAgent> f =  new ArrayList<PositionAgent>();
-		//ArrayList<PositionAgent> f = maze.getGhosts_start();
 		ArrayList<PositionAgent> f = ppg.getGhosts_pos();
 		for ( PositionAgent fap : f) {
 			fantomes.add( new PacmanAgent(fap));
@@ -103,6 +122,17 @@ public class PacmanGame extends Game {
 
 	@Override
 	void takeTurn() {
+		
+		
+		if (gameMode == "com") {
+			strategiePacman = strategieRandom;
+		}
+		else if (gameMode == "player"){
+			strategiePacman = strategiePlayer;
+		}
+		
+
+		
 		//System.out.println("AVANT TAKE TURN");
 		// TODO Auto-generated method stub
 		
@@ -124,14 +154,14 @@ public class PacmanGame extends Game {
 		ArrayList<PositionAgent> apa = new ArrayList<PositionAgent>();
 		ArrayList<PositionAgent> paf = new ArrayList<PositionAgent>();
 	
-		//timer--; 
+		timer--; 
 		if (timer <=0) {
 			etatJeu = capsuleNonActive; 
 		}
 		
 		
 		for ( Agent f : fantomes) {
-			moveAgent(f,getAction(f,maze) );
+			moveAgent(f,strategieFantome.getAction(f,maze) );
 
 			if (etatJeu == capsuleNonActive) {
 
@@ -151,7 +181,18 @@ public class PacmanGame extends Game {
 		
 		for ( Agent p : pacmans) {
 			//System.out.println("position pacman avant: " + p.position.getY());
-			moveAgent(p,getAction(p,maze) );
+			
+
+			if (gameMode == "player") {
+
+				((StrategiePlayer) strategiePacman).setEnumAction(enumAction);
+			}
+			
+
+			
+			
+			moveAgent(p,strategiePacman.getAction(p,maze) );
+			
 	
 			if (maze.isFood(p.position.getX(), p.position.getY())) {
 				maze.setFood(p.position.getX(), p.position.getY(), false); 
@@ -187,7 +228,8 @@ public class PacmanGame extends Game {
 		if (timer < 0) {
 			timer =0; 
 		}
-		System.out.println("Timer: " + timer);
+		//System.out.println("Timer: " + timer);
+		//System.out.println(etatJeu);
 		
 		
 	}
@@ -207,28 +249,20 @@ public class PacmanGame extends Game {
 	}
 	
 	
-	AgentAction getAction(Agent a, Maze m) {
-		EnumAction test =  EnumAction.haut;
-		int n = (int)(Math.random() * 4);
-		
+	public void setAction(EnumAction ea) {
+		System.out.println("dans le setAction");
+		enumAction = ea; 
+		try {
+			AgentAction aa = new AgentAction(enumAction);
+			System.out.println(aa.getAction());
+			//moveAgent(pacmans.get(0),aa );
+		}
+		catch (Exception e) {
+			System.out.println("Catch");
+		}
 
 		
-		//System.out.println("Nombre random: "+n);
-		switch (n) {
-		
-			case 0 : test = EnumAction.haut; break; 
-			case 1 : test = EnumAction.bas; break;
-			case 2 : test = EnumAction.gauche; break;
-			case 3 : test = EnumAction.droite; break;
-		}
-		//System.out.println("Actions : " +test.toString());
-		AgentAction aa = new AgentAction(test);
-		return aa;
-		//MAIS ON AURAIT AUSSI PU METTRE UN TRUC PLUS COMPLIQUE EN FONCTION DE L'AGENT ETC. PAR EXEMPLE : RAPPROCHER FANTOME PACMAN
-		
 	}
-	
-	
 	
 	boolean isLegalMove(Agent a, AgentAction aa) {
 		
@@ -294,40 +328,20 @@ public class PacmanGame extends Game {
 	}
 	
 	void moveAgent(Agent a, AgentAction aa) {
-		//System.out.println(" IS MOVE LEGAL");
 		if (isLegalMove(a, aa) ){
-			//System.out.println("MOVE LEGAL");
-			//System.out.println(aa.getAction());
-			
-			switch (aa.getAction()) {
-				/*
+			switch (aa.getAction()) {		
 				case "haut" : a.position.setY(a.position.getY() -1 );  break; 	
 				case "bas" : a.position.setY( a.position.getY()+ 1 );	break; 
 				case "droite" : a.position.setX(a.position.getX() +1 );	  break;
 				case "gauche" : a.position.setX(a.position.getX() -1 );	 break; 
-				*/
-				
-				case "haut" : a.position.setY(a.position.getY() -1 );  break; 	
-				case "bas" : a.position.setY( a.position.getY()+ 1 );	break; 
-				case "droite" : a.position.setX(a.position.getX() +1 );	  break;
-				case "gauche" : a.position.setX(a.position.getX() -1 );	 break; 
+				case "vide": break; 
 			
 			}
-			
-			
+		
 		}
-		
-
-		
+			
 	}
-
-
-
-
-	@Override
-	public void setGameMode(String gm) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 
 }
