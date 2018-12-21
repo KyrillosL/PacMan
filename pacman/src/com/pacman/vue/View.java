@@ -7,6 +7,7 @@ import event.KeyEvent;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
@@ -27,7 +28,7 @@ public class View implements Observer {
 	
 	public JButton restart; 
 	public JButton pause; 
-	protected JButton step;
+	public JButton step;
 	public JButton run; 
 	protected JFrame fenetreJeu;
 	PanelPacmanGame ppg;
@@ -36,12 +37,14 @@ public class View implements Observer {
 	JCheckBox bCom;
 	JCheckBox bPlayer;
 	JComboBox listeTerrains;
+	JTextArea vies;
+	ControleurGame cg; 
 	
 	public View(ControleurGame controleur, Game g ) throws Exception{
 		
 		game = g; 
 		
-		
+		cg = controleur; 
 
         
         
@@ -91,12 +94,14 @@ public class View implements Observer {
 		
 
 		JPanel sliderAndLabel = new JPanel();
+		sliderAndLabel.setBorder(BorderFactory.createLineBorder(Color.black));
 				
 				
 		JPanel bottom = new JPanel();
-		JSlider tourParSeconde = new JSlider(0, 0, 50, 2);
-		tourParSeconde.setMajorTickSpacing(10);
-		tourParSeconde.setMinorTickSpacing(1);
+		bottom.setBorder(BorderFactory.createLineBorder(Color.black));
+		JSlider tourParSeconde = new JSlider(0, 0, 100, 2);
+		tourParSeconde.setMajorTickSpacing(20);
+		tourParSeconde.setMinorTickSpacing(5);
 		tourParSeconde.setPaintTicks(true);
 		tourParSeconde.setSnapToTicks(true);
 		tourParSeconde.setPaintLabels(true);
@@ -113,11 +118,12 @@ public class View implements Observer {
 
 		
 		
-		JTextArea player = new JTextArea("Mode de Jeu");
+		JLabel player = new JLabel("Mode de Jeu");
 		player.setBackground(c);
 		
 		
 		JPanel gameMode = new JPanel();
+		gameMode.setBorder(BorderFactory.createLineBorder(Color.black));
 		ButtonGroup bGameMode = new ButtonGroup();
 		
 		bCom = new JCheckBox("Com");
@@ -138,14 +144,20 @@ public class View implements Observer {
 		gameMode.add(bPlayer);
 		bottom.add(gameMode);
 		
+		JPanel terrainVie = new JPanel();
+		terrainVie.setBorder(BorderFactory.createLineBorder(Color.black));
+		terrainVie.setLayout(new GridLayout(3,1));
 		
-		String[] petStrings = { "capsuleClassic", "bigCorners"};
-		
-		
+		String[] petStrings = { "capsuleClassic", "bigCorners", "bigMaze", "bigSafeSearch", "bigSearch", "boxSearch", "contestClassic", "contoursMaze", "mediumMaze" };
 		listeTerrains = new JComboBox(petStrings);
 		listeTerrains.setSelectedIndex(0);
 		//listeTerrains.addActionListener(this);
-		bottom.add(listeTerrains);
+		terrainVie.add(listeTerrains);
+		
+		vies = new JTextArea("Vies: 3");
+		vies.setBackground(c);
+		vies.setAlignmentX(Component.CENTER_ALIGNMENT);
+		terrainVie.add(vies);
 		
 		
 		
@@ -154,7 +166,7 @@ public class View implements Observer {
 		sliderAndLabel.add(tourParSeconde); 
 		sliderAndLabel.add(vitesse);
 		sliderAndLabel.setLayout(new GridLayout(3,1));
-		
+		bottom.add(terrainVie);
 		bottom.add(sliderAndLabel);
 
 		bottom.setLayout(new GridLayout(1,1));
@@ -229,19 +241,15 @@ public class View implements Observer {
 				
 			}
 		});
+	    
+
+	    
 	    restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				
-				//
-				fenetreJeu.remove(ppg);
-				//ppg = null; 
-				controleur.init();
-				ppg = game.getPpg(); 
-				System.out.println(ppg.toString());
-				fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
-		        fenetreJeu.add(ppg);
-		        fenetreJeu.setVisible(true);
+				initPanel(3); 
+
 		        
 				
 			}
@@ -296,7 +304,7 @@ public class View implements Observer {
 				
 				fenetreJeu.remove(ppg);
 
-				controleur.init();
+				controleur.init(3);
 				ppg = game.getPpg(); 
 				System.out.println(ppg.toString());
 				fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
@@ -329,11 +337,48 @@ public class View implements Observer {
         
        
 	}
+	
+
+	   public void initPanel(int nbVies){
+			fenetreJeu.remove(ppg);
+			//ppg = null; 
+			cg.init(nbVies);
+			ppg = game.getPpg(); 
+			System.out.println(ppg.toString());
+			fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
+	        fenetreJeu.add(ppg);
+	        fenetreJeu.setVisible(true);
+	    }
+	
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
 		//System.out.println("+++++++++++++UPDATE+++++++++++++++");
 		tour.setText("Tour "+game.getNbTour());
+		
+		if (game.getVies() <=0) {
+			vies.setText("PERDU ! :( \n\n ->Press Restart to play again<-");
+			restart.setEnabled(true);
+			run.setEnabled(false);
+			pause.setEnabled(false);
+			step.setEnabled(false);
+		}
+		else {
+			vies.setText("Vies:  "+game.getVies());
+		}
+		if (game.getEtat() == "stop") {
+			initPanel(game.getVies());
+			
+		}
+		else if (game.getEtat() == "win") {
+			vies.setText("-> ! GAGNE ! :)<-  \n\n ->Press Restart to play again<-");
+			restart.setEnabled(true);
+			run.setEnabled(false);
+			pause.setEnabled(false);
+			step.setEnabled(false);
+			
+		}
+
 		fenetreJeu.repaint();
 	}
 	

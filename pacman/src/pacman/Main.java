@@ -15,7 +15,7 @@ public class Main {
 		  
 		  //Game jeu = new PacmanGame(100000000); 
 		  Game jeu = new PacmanGame(100000000); 
-		  jeu.init();
+		  jeu.init(3);
 		  ControleurAvance controleur = new ControleurAvance(jeu);
 		  
 

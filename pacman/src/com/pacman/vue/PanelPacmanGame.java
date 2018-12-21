@@ -16,8 +16,15 @@ public class PanelPacmanGame extends JPanel{
 	private double sizePacman=1.1;	
 	private Color pacmansColor = Color.yellow;
 	
+	
+	public void setPacmanColor(Color c) {
+		pacmansColor = c;
+	}
+	
+
+	
 	private Color ghostsColor = Color.white;
-	private Color ghostScarredColor=Color.pink;
+	private Color ghostScarredColor=Color.cyan;
 
 	private double sizeFood=0.3; 
 	private Color colorFood=Color.white; 
@@ -209,6 +216,8 @@ public class PanelPacmanGame extends JPanel{
 	public void setGhosts_pos(ArrayList<PositionAgent> ghosts_pos) {
 		this.ghosts_pos = ghosts_pos;
 	}
+
+
 
 
 }

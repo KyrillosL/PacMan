@@ -32,15 +32,15 @@ public class ControleurBasique implements ControleurGame {
 	}
 
 	@Override
-	public void init() {
+	public void init(int nbVies) {
 		// TODO Auto-generated method stub
-		game.init();
+		game.init(nbVies);
 	}
 
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-		game.stop();
+		game.stop(false);
 	}
 
 	@Override

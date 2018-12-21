@@ -1,4 +1,4 @@
-package com.pacman.modele;
+package com.pacman.strategies;
 
 import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
