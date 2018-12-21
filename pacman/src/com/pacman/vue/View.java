@@ -37,9 +37,12 @@ public class View implements Observer {
 	JLabel tour;
 	JCheckBox bCom;
 	JCheckBox bPlayer;
+	JCheckBox bAEtoile;
 	JComboBox listeTerrains;
 	JLabel vies;
+	JLabel infos;
 	ControleurGame cg; 
+	int tailleFontVie; 
 	
 	public View(ControleurGame controleur, Game g ) throws Exception{
 		
@@ -53,7 +56,7 @@ public class View implements Observer {
 		JFrame commande = new JFrame();
 		commande.setTitle("Commande");
 		commande.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		commande.setSize(new Dimension(700, 300));
+		commande.setSize(new Dimension(900, 400));
         
         Dimension windowSize = commande.getSize();
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -127,15 +130,19 @@ public class View implements Observer {
 		gameMode.setBorder(BorderFactory.createLineBorder(Color.black));
 		ButtonGroup bGameMode = new ButtonGroup();
 		
-		bCom = new JCheckBox("Com");
-		bPlayer = new JCheckBox("Player");
+		bAEtoile = new JCheckBox("Magnifique A *");
+		
+		bAEtoile.setVerticalTextPosition(SwingConstants.BOTTOM);
+		bCom = new JCheckBox("Computer");
+		bPlayer = new JCheckBox("Player (clavier)");
 		bCom.setSelected(true);
 		 
 
 		bGameMode.add(bCom);
 		bGameMode.add(bPlayer);
+		bGameMode.add(bAEtoile);
 		
-		gameMode.setLayout(new GridLayout(3,1));
+		gameMode.setLayout(new GridLayout(2,2));
 		
 
 		
@@ -143,6 +150,7 @@ public class View implements Observer {
 		
 		gameMode.add(bCom);
 		gameMode.add(bPlayer);
+		gameMode.add(bAEtoile);
 		bottom.add(gameMode);
 		
 		JPanel terrainVie = new JPanel();
@@ -156,11 +164,19 @@ public class View implements Observer {
 		terrainVie.add(listeTerrains);
 		
 		vies = new JLabel("Vies: 3", SwingConstants.CENTER);
-
-		vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, vies.getFont().getSize()*2));
+		tailleFontVie = vies.getFont().getSize(); 
+		System.out.println(tailleFontVie);
+		vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, tailleFontVie*2));
 		vies.setBackground(c);
 		vies.setAlignmentX(Component.CENTER_ALIGNMENT);
 		terrainVie.add(vies);
+		
+		
+		infos = new JLabel("-> PRESS SPACE BAR TO PLAY <- ", SwingConstants.CENTER);
+		infos.setBackground(c);
+		infos.setAlignmentX(Component.CENTER_ALIGNMENT);
+		terrainVie.add(infos);
+		
 		
 		
 		
@@ -188,7 +204,7 @@ public class View implements Observer {
         
         
 	    fenetreJeu = new JFrame();
-		KeyEvent ke = new KeyEvent(game); 
+		KeyEvent ke = new KeyEvent(game, this, cg); 
 		fenetreJeu.addKeyListener(ke);
 
 		
@@ -231,8 +247,6 @@ public class View implements Observer {
         
 		ppg = game.getPpg(); 
 		fenetreJeu.setSize(game.getMaze().getSizeX()*50, game.getMaze().getSizeY()*50);
-		
-
         fenetreJeu.add(ppg);
 
         
@@ -250,7 +264,7 @@ public class View implements Observer {
 	    restart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				infos.setText("-> PRESS SPACE BAR TO PLAY <- ");
 				initPanel(3); 
 
 		        
@@ -360,21 +374,28 @@ public class View implements Observer {
 		tour.setText("Tour "+game.getNbTour());
 		
 		if (game.getVies() <=0) {
-			vies.setText("PERDU ! :( \n\n ->Press Restart to play again<-");
+			vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, tailleFontVie));
+			vies.setText(" ): ! PERDU ! :( ");
+			infos.setText(  " -> Press Restart to play again <-" );
 			restart.setEnabled(true);
 			run.setEnabled(false);
 			pause.setEnabled(false);
 			step.setEnabled(false);
 		}
 		else {
+			vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, tailleFontVie*2));
 			vies.setText("Vies:  "+game.getVies());
+
 		}
 		if (game.getEtat() == "stop") {
 			initPanel(game.getVies());
 			
 		}
 		else if (game.getEtat() == "win") {
-			vies.setText("-> ! GAGNE ! :)<-  \n\n ->Press Restart to play again<-");
+			vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, tailleFontVie));
+			vies.setText(" (: ! GAGNE ! :)" );
+			infos.setText(  " -> Press Restart to play again <-" );		
+			
 			restart.setEnabled(true);
 			run.setEnabled(false);
 			pause.setEnabled(false);
