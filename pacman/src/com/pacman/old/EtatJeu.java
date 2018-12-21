@@ -1,4 +1,4 @@
-package com.pacman.modele;
+package com.pacman.old;
 
 import java.util.ArrayList;
 

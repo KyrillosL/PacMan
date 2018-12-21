@@ -1,15 +1,16 @@
-package com.pacman.modele;
+package com.pacman.old;
 
 import java.util.ArrayList;
 
 import com.pacman.agent.Agent;
+import com.pacman.modele.PacmanGame;
 
-public class CapsuleNonActive implements EtatJeu {
-
+public class CapsuleActive implements EtatJeu {
 
 	PacmanGame pacmanGame; 
 	
-	public CapsuleNonActive(PacmanGame pc) {
+
+	public CapsuleActive(PacmanGame pc) {
 		
 		this.pacmanGame = pc; 
 	}
@@ -17,9 +18,10 @@ public class CapsuleNonActive implements EtatJeu {
 	@Override
 	public void manger(ArrayList <Agent> fantomes, Agent f,  ArrayList <Agent> pacmans, Agent p) {
 
-		pacmans.remove(p);
-		// TODO Auto-generated method stub
-		
+		fantomes.remove(f);
+
 	}
+	
+
 
 }

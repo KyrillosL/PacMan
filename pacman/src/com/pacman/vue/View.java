@@ -131,6 +131,7 @@ public class View implements Observer {
 		ButtonGroup bGameMode = new ButtonGroup();
 		
 		bAEtoile = new JCheckBox("Magnifique A *");
+		bAEtoile.setToolTipText("Pour tester notre impressionante recherche A* sur les cartes ou il n'y a pas de fantomes");
 		
 		bAEtoile.setVerticalTextPosition(SwingConstants.BOTTOM);
 		bCom = new JCheckBox("Computer");
@@ -301,6 +302,16 @@ public class View implements Observer {
 				
 			}
 		});
+	    
+	    bAEtoile.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				controleur.setGameMode("AEtoile");
+				//System.out.println("STEP");
+				
+			}
+		});
+
 
 	    tourParSeconde.addChangeListener(new ChangeListener(){
 	          public void stateChanged(ChangeEvent e) {

@@ -9,6 +9,12 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
 import com.pacman.agent.AgentAction.EnumAction;
+import com.pacman.etat.EtatFantomeApeure;
+import com.pacman.etat.EtatFantomeNormal;
+import com.pacman.etat.EtatFantomes;
+import com.pacman.etat.EtatPacman;
+import com.pacman.etat.EtatPacmanBoost;
+import com.pacman.etat.EtatPacmanNormal;
 import com.pacman.strategies.Strategie;
 import com.pacman.strategies.StrategieAttaqueFantome;
 import com.pacman.strategies.StrategieAttaquePacman;
@@ -25,7 +31,7 @@ import java.awt.Color;
 
 public class PacmanGame extends Game {
 	
-
+	int tempsBoost = 100; 
 	
 
 	boolean capsuleActive = false;
@@ -40,9 +46,10 @@ public class PacmanGame extends Game {
 	EtatFantomes etatFantomesApeure;
 	EtatFantomes etatFantomes = etatFantomesNormal; 
 	
-	Strategie strategieRandom = new StrategieRandom();
-	Strategie strategiePlayer = new StrategiePlayer();
+	Strategie strategieRandom; 
+	StrategiePlayer strategiePlayer; 
 	
+	/*
 	Strategie strategiePacman; 
 	Strategie strategieGommePacman = new StrategieGommePacman();
 	Strategie strategieAttaquePacman = new StrategieAttaquePacman();
@@ -50,6 +57,8 @@ public class PacmanGame extends Game {
 	Strategie strategieFantome; 
 	Strategie strategieFuiteFantome = new StrategieFuiteFantome();
 	Strategie strategieAttaqueFantome = new StrategieAttaqueFantome();
+	
+	*/
 	
 	AgentAction actionPrecedente; 
 	EnumAction enumAction = EnumAction.vide;
@@ -68,14 +77,15 @@ public class PacmanGame extends Game {
 		
 
 		
-		etatPacmanNormal = new EtatPacmanNormal(this); 
-		etatPacmanBoost = new EtatPacmanBoost(this); 
+		etatPacmanNormal = new EtatPacmanNormal(); 
+		etatPacmanBoost = new EtatPacmanBoost(); 
 		
-		etatFantomesNormal = new EtatFantomeNormal(this); 
-		etatFantomesApeure = new EtatFantomeApeure(this); 
+		etatFantomesNormal = new EtatFantomeNormal(); 
+		etatFantomesApeure = new EtatFantomeApeure(); 
 		
-		strategiePacman = strategiePlayer; 
-		strategieFantome = strategieRandom; 
+		
+		strategieRandom = new StrategieRandom();
+		strategiePlayer = new StrategiePlayer();
 		
 	}
 
@@ -127,12 +137,19 @@ public class PacmanGame extends Game {
 		etatPacman = etatPacmanNormal;
 		etatFantomes = etatFantomesNormal;
 
-		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
+	//strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
 
-		strategiePacman= new StrategieGommePacman();
+	
 		enumAction = EnumAction.vide;
-
 		
+		/*
+		if (gameMode == "player"){
+			strategiePacman = strategiePlayer;
+		}
+		else if (gameMode == "com"){
+			strategiePacman= strategieGommePacman;
+		}
+		*/
 		
 
 	}
@@ -156,12 +173,11 @@ public class PacmanGame extends Game {
 		
 
 
-		if (gameMode == "player"){
-			strategiePacman = strategiePlayer;
-		}
+
 				
 		if ( capsuleActive) {
 			etatPacman = etatPacmanBoost; 
+			
 			etatFantomes = etatFantomesApeure;
 			
 		}
@@ -169,25 +185,30 @@ public class PacmanGame extends Game {
 			etatFantomes = etatFantomesNormal; 
 			etatPacman = etatPacmanNormal; 
 		}
+
 		
-		if(etatPacman == etatPacmanNormal) {
-			strategiePacman = strategieGommePacman;
-			strategieFantome = strategieAttaqueFantome;
+		/*
+		if (gameMode == "player") {
+			strategiePacman = strategiePlayer;
 		}
-		else if(etatPacman == etatPacmanBoost) {
-			strategiePacman = strategieAttaquePacman;
-			strategieFantome = strategieFuiteFantome;
-			
+		else {
+			if(etatPacman == etatPacmanNormal) {
+				strategiePacman = strategieGommePacman;
+				strategieFantome = strategieAttaqueFantome;
+			}
+			else if(etatPacman == etatPacmanBoost) {
+				strategiePacman = strategieAttaquePacman;
+				strategieFantome = strategieFuiteFantome;
+				
+			}
 		}
-		
+*/
 	
-		
-		
-		
-		
-		if (fantomes.size()==0 ||plusDeGomme() ) {
-			System.out.println("Il n'y a plus de fantomes, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
-			win(); 
+		if (gameMode != "AEtoile") {
+			if (fantomes.size()==0 ||plusDeGomme() ) {
+				System.out.println("Il n'y a plus de fantomes, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
+				win(); 
+			}
 		}
 		
 		
@@ -209,8 +230,8 @@ public class PacmanGame extends Game {
 		for ( Agent f : fantomes) {
 
 
+			moveAgent(f, etatFantomes.getStrategie().getAction(f,maze, pacmans) );
 
-			moveAgent(f,strategieFantome.getAction(f,maze, pacmans) );
 
 			if (! capsuleActive) {
 				
@@ -240,13 +261,17 @@ public class PacmanGame extends Game {
 			
 
 			if (gameMode == "player") {
-				((StrategiePlayer) strategiePacman).setEnumAction(enumAction);
+				strategiePlayer.setEnumAction(enumAction);
+				moveAgent(p,strategiePlayer.getAction(p,maze, fantomes) );
+			}
+			else {
+				moveAgent(p,etatPacman.getStrategie().getAction(p,maze, fantomes) );
 			}
 			
 
 
 			
-			moveAgent(p,strategiePacman.getAction(p,maze, fantomes) );
+			
 			
 	
 			if (maze.isFood(p.position.getX(), p.position.getY())) {
@@ -254,7 +279,7 @@ public class PacmanGame extends Game {
 			}
 			
 			if (maze.isCapsule(p.position.getX(), p.position.getY())){
-				timer=500;
+				timer=tempsBoost;
 				capsuleActive = true; 
 
 				maze.setCapsule(p.position.getX(), p.position.getY(), false); 
