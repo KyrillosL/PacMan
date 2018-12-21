@@ -7,21 +7,28 @@ import javax.swing.*;
 
 
 import com.pacman.agent.AgentAction.EnumAction;
+import com.pacman.controleur.ControleurGame;
 import com.pacman.modele.Game;
 import com.pacman.modele.PacmanGame;
+import com.pacman.vue.View;
  
 public class KeyEvent extends JFrame implements KeyListener, ActionListener
 {
 
+	View view; 
 	PacmanGame pg; 
 	EnumAction action ;
     JTextArea displayArea;
     JTextField typingArea;
+    ControleurGame cg; 
     static final String newline = System.getProperty("line.separator");
      
     
-    public KeyEvent(Game game) {
+    public KeyEvent(Game game, View v, ControleurGame cg) {
+    	this.cg = cg; 
+    	//System.out.println("Constructeur key event");
 		this.pg =(PacmanGame) game; 
+		this.view = v; 
     }
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -44,26 +51,30 @@ public class KeyEvent extends JFrame implements KeyListener, ActionListener
 	@Override
 	public void keyPressed(java.awt.event.KeyEvent e) {
 		// TODO Auto-generated method stub
-		//System.out.println(e.getKeyCode());
+		System.out.println(e.getKeyCode());
 		
 	    switch(e.getKeyCode())
 	    {
 	      case 37:
-	    	  action = EnumAction.gauche;
+	    	  pg.setAction(EnumAction.gauche); 
 	    	  break;
 
 	      case 39:
-	    	  action = EnumAction.droite;
+	    	  pg.setAction(EnumAction.droite); 
 	    	  break;     
 	      case 38:
-	    	  action = EnumAction.haut; 
+	    	  pg.setAction(EnumAction.haut); 
 	    	  break; 
 
 	      case 40:
-	    	  action = EnumAction.bas; 
+	    	  pg.setAction(EnumAction.bas); 
+	    	  break;
+	    	  
+	      case 32:
+	    	  cg.launch();
 	    	  break;
 	    } 
-	    pg.setAction(action);
+	    
 	    
 		
 	}

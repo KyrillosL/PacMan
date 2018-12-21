@@ -126,6 +126,7 @@ public class PacmanGame extends Game {
 
 		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
 		//strategiePacman= new StrategieAttaquePacman();
+		enumAction = EnumAction.vide;
 		
 		
 
@@ -149,7 +150,7 @@ public class PacmanGame extends Game {
 		
 
 		if (gameMode == "com") {
-			//strategiePacman = strategieRandom;
+			strategiePacman = strategieRandom;
 		}
 		else if (gameMode == "player"){
 			strategiePacman = strategiePlayer;
@@ -222,7 +223,6 @@ public class PacmanGame extends Game {
 			
 
 			if (gameMode == "player") {
-
 				((StrategiePlayer) strategiePacman).setEnumAction(enumAction);
 			}
 			

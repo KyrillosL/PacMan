@@ -55,13 +55,15 @@ public class StrategieAttaqueFantome implements Strategie{
 			}
 			//temp est maintenant la première case où aller
 			
-			
-			switch (temp.getDir()) {
-				case PositionAgent.HAUT: return new AgentAction(AgentAction.EnumAction.haut);
-				case PositionAgent.BAS: return new AgentAction(AgentAction.EnumAction.bas);
-				case PositionAgent.GAUCHE: return new AgentAction(AgentAction.EnumAction.gauche);
-				case PositionAgent.DROITE: return new AgentAction(AgentAction.EnumAction.droite);
-	
+			if (temp != null) {
+				switch (temp.getDir()) {
+					case PositionAgent.HAUT: return new AgentAction(AgentAction.EnumAction.haut);
+					case PositionAgent.BAS: return new AgentAction(AgentAction.EnumAction.bas);
+					case PositionAgent.GAUCHE: return new AgentAction(AgentAction.EnumAction.gauche);
+					case PositionAgent.DROITE: return new AgentAction(AgentAction.EnumAction.droite);
+		
+				
+				}
 			}
 			
 		
