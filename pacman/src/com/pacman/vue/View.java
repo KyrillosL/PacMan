@@ -9,6 +9,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
@@ -33,11 +34,11 @@ public class View implements Observer {
 	protected JFrame fenetreJeu;
 	PanelPacmanGame ppg;
 	Game game; 
-	JTextArea tour;
+	JLabel tour;
 	JCheckBox bCom;
 	JCheckBox bPlayer;
 	JComboBox listeTerrains;
-	JTextArea vies;
+	JLabel vies;
 	ControleurGame cg; 
 	
 	public View(ControleurGame controleur, Game g ) throws Exception{
@@ -110,7 +111,7 @@ public class View implements Observer {
 		
 		Color c = bottom.getBackground();
 		
-		tour = new JTextArea("Tour"); 
+		tour = new JLabel("Tour", SwingConstants.CENTER); 
 		tour.setBackground(c);
 		
 		
@@ -118,7 +119,7 @@ public class View implements Observer {
 
 		
 		
-		JLabel player = new JLabel("Mode de Jeu");
+		JLabel player = new JLabel("Mode de Jeu", SwingConstants.CENTER);
 		player.setBackground(c);
 		
 		
@@ -154,7 +155,9 @@ public class View implements Observer {
 		//listeTerrains.addActionListener(this);
 		terrainVie.add(listeTerrains);
 		
-		vies = new JTextArea("Vies: 3");
+		vies = new JLabel("Vies: 3", SwingConstants.CENTER);
+
+		vies.setFont(new Font(vies.getFont().getName(), Font.PLAIN, vies.getFont().getSize()*2));
 		vies.setBackground(c);
 		vies.setAlignmentX(Component.CENTER_ALIGNMENT);
 		terrainVie.add(vies);
