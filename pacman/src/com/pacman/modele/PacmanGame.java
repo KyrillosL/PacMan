@@ -11,7 +11,7 @@ import com.pacman.agent.AgentAction;
 import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.etat.EtatFantomeApeure;
 import com.pacman.etat.EtatFantomeNormal;
-import com.pacman.etat.EtatFantomes;
+import com.pacman.etat.EtatFantomes; 
 import com.pacman.etat.EtatPacman;
 import com.pacman.etat.EtatPacmanBoost;
 import com.pacman.etat.EtatPacmanNormal;
