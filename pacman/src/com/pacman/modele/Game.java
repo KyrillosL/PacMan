@@ -9,6 +9,10 @@ public abstract class Game implements Runnable, Sujet {
 	
 	Thread thread;  
 	int vitesseJeu=200; 
+	int vies; 
+	
+	private String etat; 
+
 
 	 
 	public Maze maze;
@@ -21,6 +25,11 @@ public abstract class Game implements Runnable, Sujet {
         thread.start();
         
     }
+    
+    public int getVies() {
+    	return this.vies;
+    }
+    
 	public Maze getMaze() {
 		// TODO Auto-generated method stub
 		
@@ -67,11 +76,13 @@ public abstract class Game implements Runnable, Sujet {
 		
 	}
 	
-	public void init() {
-		
-		
+	public void init(int nbVies) {
+		setEtat("init");
+		vies = nbVies; 
 		isRunning=false; 
 		nbTour =0; 
+		gameOver=false;
+		
 		
 		try {
 			//maze = new Maze("layouts/originalClassic.lay");
@@ -92,6 +103,11 @@ public abstract class Game implements Runnable, Sujet {
 	
 	public void step() throws InterruptedException {
 		//System.out.println("Step Game ");
+		
+		if (vies <=0) {
+			gameOver=true; 
+		}
+		
 		isRunning=true; 
 		if (!termine) {
 			takeTurn(); 
@@ -99,9 +115,6 @@ public abstract class Game implements Runnable, Sujet {
 			//notifyObserver(); 
 			Thread.sleep(vitesseJeu);
 			
-		}
-		else {
-			gameOver(); 
 		}
 		notifyObserver(); 
 		
@@ -117,11 +130,21 @@ public abstract class Game implements Runnable, Sujet {
 			e.printStackTrace();
 			} 
 		}
-		gameOver();
+
 	}
-	public void stop() {
+	public void stop(boolean win) {
 		isRunning=false; 
 		System.out.println("STOP");
+		if (!gameOver)
+			init(vies-1);
+		
+		if (win) {
+			setEtat("win");
+		}
+		else {
+			setEtat("stop");
+		}
+
 		notifyObserver(); 
 	}
 	
@@ -140,6 +163,8 @@ public abstract class Game implements Runnable, Sujet {
 	abstract void initializeGame();
 	abstract void takeTurn();
 	abstract void gameOver();
+
+	private boolean gameOver; 
 	public PanelPacmanGame getPpg() {
 		// TODO Auto-generated method stub
 		System.out.println("dans le mauvais ppg");
@@ -152,12 +177,20 @@ public abstract class Game implements Runnable, Sujet {
 			//maze = new Maze("layouts/" + name);
 			mazeString = "layouts/" + name;
 			System.out.println(maze.toString());
-			init();
+			init(3);
 	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public String getEtat() {
+		return etat;
+	}
+
+	public void setEtat(String etat) {
+		this.etat = etat;
 	}
 	
 

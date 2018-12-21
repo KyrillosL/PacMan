@@ -14,6 +14,7 @@ import com.pacman.agent.PositionAgent;
 import com.pacman.vue.Maze;
 import com.pacman.vue.PanelPacmanGame;
 import com.pacman.*;
+import java.awt.Color;
 
 public class PacmanGame extends Game {
 	
@@ -115,15 +116,32 @@ public class PacmanGame extends Game {
 			fantomes.add( new PacmanAgent(fap));
 		}	
 		
+		etatJeu = capsuleNonActive;
+		etatPacman = etatPacmanNormal;
+		etatFantomes = etatFantomesNormal;
+
+		
 		
 
+	}
+	
+	private boolean plusDeGomme() {
+		boolean fin = true; 
+		for (int x = 0; x<maze.getSizeX(); x++) {
+			for (int y = 0; y<maze.getSizeY(); y++) {
+				if (maze.isFood(x, y))
+					fin = false; 
+				
+			}
+		}
+		return fin; 
 	}
 
 
 	@Override
 	void takeTurn() {
 		
-		
+
 		if (gameMode == "com") {
 			strategiePacman = strategieRandom;
 		}
@@ -145,11 +163,16 @@ public class PacmanGame extends Game {
 			etatFantomes = etatFantomesApeure;  
 		}
 		
+		if (fantomes.size()==0 ||plusDeGomme() ) {
+			System.out.println("Il n'y a plus de fantomes, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
+			win(); 
+		}
 		
-		if (fantomes.size()==0 || pacmans.size()==0) {
-			System.out.println("P: "+ pacmans.size()+ ", F: "+fantomes.size());
+		if ( pacmans.size()==0) {
+			System.out.println("Il n'y a plus de pacmans, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
 			gameOver(); 
 		}
+
 		
 		ArrayList<PositionAgent> apa = new ArrayList<PositionAgent>();
 		ArrayList<PositionAgent> paf = new ArrayList<PositionAgent>();
@@ -165,10 +188,15 @@ public class PacmanGame extends Game {
 
 			if (etatJeu == capsuleNonActive) {
 
+				ppg.setGhostsScarred(false);
+				
 				if (pacmans.removeIf(p -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))){
 					System.out.println("J'ai mangé pacman");
 				}
 
+			}
+			else {
+				ppg.setGhostsScarred(true);
 			}
 
 			paf.add(f.position);
@@ -205,13 +233,16 @@ public class PacmanGame extends Game {
 				maze.setCapsule(p.position.getX(), p.position.getY(), false); 
 			}		
 			if (etatJeu == capsuleActive) {
-
-
+				Color c= Color.RED ;
+				ppg.setPacmanColor(c);
 				if (fantomes.removeIf(f -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))) {
 					System.out.println("J'ai mangé un fantome");
 				}
-
 				
+			}
+			else {
+				Color c= Color.YELLOW ;
+				ppg.setPacmanColor(c);
 			}
 			//etatPacman.deplacer(p);
 
@@ -236,9 +267,11 @@ public class PacmanGame extends Game {
 
 	@Override
 	void gameOver() {
-		stop(); 
-		
-		// TODO Auto-generated method stub
+		stop(false); 
+		//notifyObserver(); 
+	}
+	void win() {
+		stop(true); 
 		//notifyObserver(); 
 	}
 	
