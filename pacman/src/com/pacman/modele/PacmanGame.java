@@ -12,6 +12,8 @@ import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.strategies.Strategie;
 import com.pacman.strategies.StrategieAttaqueFantome;
 import com.pacman.strategies.StrategieAttaquePacman;
+import com.pacman.strategies.StrategieFuiteFantome;
+import com.pacman.strategies.StrategieGommePacman;
 import com.pacman.strategies.StrategiePlayer;
 import com.pacman.strategies.StrategieRandom;
 import com.pacman.agent.PacmanAgent;
@@ -25,10 +27,8 @@ public class PacmanGame extends Game {
 	
 
 	
-	EtatJeu capsuleNonActive; 
-	EtatJeu capsuleActive;
-	EtatJeu etatJeu = capsuleNonActive; 
-	
+
+	boolean capsuleActive = false;
 	
 	
 	EtatPacman etatPacmanNormal; 
@@ -44,7 +44,12 @@ public class PacmanGame extends Game {
 	Strategie strategiePlayer = new StrategiePlayer();
 	
 	Strategie strategiePacman; 
+	Strategie strategieGommePacman = new StrategieGommePacman();
+	Strategie strategieAttaquePacman = new StrategieAttaquePacman();
+	
 	Strategie strategieFantome; 
+	Strategie strategieFuiteFantome = new StrategieFuiteFantome();
+	Strategie strategieAttaqueFantome = new StrategieAttaqueFantome();
 	
 	AgentAction actionPrecedente; 
 	EnumAction enumAction = EnumAction.vide;
@@ -61,8 +66,7 @@ public class PacmanGame extends Game {
 	public PacmanGame(int mt) {
 		super(mt);
 		
-		capsuleNonActive = new CapsuleNonActive(this); 
-		capsuleActive = new CapsuleActive(this); 
+
 		
 		etatPacmanNormal = new EtatPacmanNormal(this); 
 		etatPacmanBoost = new EtatPacmanBoost(this); 
@@ -120,13 +124,14 @@ public class PacmanGame extends Game {
 			fantomes.add( new PacmanAgent(fap));
 		}	
 		
-		etatJeu = capsuleNonActive;
 		etatPacman = etatPacmanNormal;
 		etatFantomes = etatFantomesNormal;
 
 		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
-		//strategiePacman= new StrategieAttaquePacman();
+
+		strategiePacman= new StrategieGommePacman();
 		enumAction = EnumAction.vide;
+
 		
 		
 
@@ -148,31 +153,43 @@ public class PacmanGame extends Game {
 	@Override
 	void takeTurn() {
 		
+		
 
-		if (gameMode == "com") {
-			strategiePacman = strategieRandom;
-		}
-		else if (gameMode == "player"){
+
+		if (gameMode == "player"){
 			strategiePacman = strategiePlayer;
 		}
-		
-
-		
-		//System.out.println("AVANT TAKE TURN");
-		
-		if (etatJeu == capsuleNonActive) {
+				
+		if ( capsuleActive) {
+			etatPacman = etatPacmanBoost; 
+			etatFantomes = etatFantomesApeure;
+			
+		}
+		else {
 			etatFantomes = etatFantomesNormal; 
 			etatPacman = etatPacmanNormal; 
 		}
-		else {
-			etatPacman = etatPacmanBoost; 
-			etatFantomes = etatFantomesApeure;  
+		
+		if(etatPacman == etatPacmanNormal) {
+			strategiePacman = strategieGommePacman;
+			strategieFantome = strategieAttaqueFantome;
 		}
+		else if(etatPacman == etatPacmanBoost) {
+			strategiePacman = strategieAttaquePacman;
+			strategieFantome = strategieFuiteFantome;
+			
+		}
+		
+	
+		
+		
+		
 		
 		if (fantomes.size()==0 ||plusDeGomme() ) {
 			System.out.println("Il n'y a plus de fantomes, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
 			win(); 
 		}
+		
 		
 		if ( pacmans.size()==0) {
 			System.out.println("Il n'y a plus de pacmans, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
@@ -185,7 +202,7 @@ public class PacmanGame extends Game {
 	
 		timer--; 
 		if (timer <=0) {
-			etatJeu = capsuleNonActive; 
+			capsuleActive=false; 
 		}
 		
 		
@@ -195,7 +212,7 @@ public class PacmanGame extends Game {
 
 			moveAgent(f,strategieFantome.getAction(f,maze, pacmans) );
 
-			if (etatJeu == capsuleNonActive) {
+			if (! capsuleActive) {
 				
 				ppg.setGhostsScarred(false);
 				
@@ -238,11 +255,11 @@ public class PacmanGame extends Game {
 			
 			if (maze.isCapsule(p.position.getX(), p.position.getY())){
 				timer=500;
-				etatJeu = capsuleActive; 
+				capsuleActive = true; 
 
 				maze.setCapsule(p.position.getX(), p.position.getY(), false); 
 			}		
-			if (etatJeu == capsuleActive) {
+			if (capsuleActive) {
 				Color c= Color.RED ;
 				ppg.setPacmanColor(c);
 				if (fantomes.removeIf(f -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))) {
