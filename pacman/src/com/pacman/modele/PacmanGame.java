@@ -9,6 +9,9 @@ import javax.swing.text.html.HTMLDocument.Iterator;
 import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
 import com.pacman.agent.AgentAction.EnumAction;
+import com.pacman.strategies.Strategie;
+import com.pacman.strategies.StrategiePlayer;
+import com.pacman.strategies.StrategieRandom;
 import com.pacman.agent.PacmanAgent;
 import com.pacman.agent.PositionAgent;
 import com.pacman.vue.Maze;
@@ -363,10 +366,10 @@ public class PacmanGame extends Game {
 	void moveAgent(Agent a, AgentAction aa) {
 		if (isLegalMove(a, aa) ){
 			switch (aa.getAction()) {		
-				case "haut" : a.position.setY(a.position.getY() -1 );  break; 	
-				case "bas" : a.position.setY( a.position.getY()+ 1 );	break; 
-				case "droite" : a.position.setX(a.position.getX() +1 );	  break;
-				case "gauche" : a.position.setX(a.position.getX() -1 );	 break; 
+				case "haut" : a.position.setY(a.position.getY() -1 ); a.position.setDir(0);  break; 	
+				case "bas" : a.position.setY( a.position.getY()+ 1 );a.position.setDir(1);	break; 
+				case "droite" : a.position.setX(a.position.getX() +1 );	a.position.setDir(2);  break;
+				case "gauche" : a.position.setX(a.position.getX() -1 );	a.position.setDir(3); break; 
 				case "vide": break; 
 			
 			}
