@@ -13,17 +13,14 @@ import com.pacman.vue.Maze;
 import ia.IA;
 
 public class StrategieAttaquePacman implements Strategie{
-	private Agent pacman;
-	private ArrayList<Agent> fantomes;
-	
-	public StrategieAttaquePacman(Agent pacman, ArrayList<Agent> fantomes) {
-		this.fantomes = fantomes;
-		this.pacman = pacman;
+
+	public StrategieAttaquePacman() {
+
 	}
 	
 
 	@Override
-	public AgentAction getAction(Agent a, Maze m) {
+	public AgentAction getAction(Agent pacman, Maze m,  ArrayList<Agent> fantomes) {
 		int cout = 0;
 		int cout_min = 100000000; 		//INFINI
 		Agent f_min = null;
@@ -44,9 +41,14 @@ public class StrategieAttaquePacman implements Strategie{
 
 
 		try {
-			while (! chemins.get(temp).coordonneesEgales(pacman.position)) {			//tant que qu'on arrive pas au depart, on retrace le chemin
+			do {
 				temp = chemins.get(temp);
 			}
+			while (! chemins.get(temp).coordonneesEgales(pacman.position));		
+				//tant que qu'on arrive pas au depart, on retrace le chemin
+				
+		
+
 		}catch(Exception e) {
 			
 		}
