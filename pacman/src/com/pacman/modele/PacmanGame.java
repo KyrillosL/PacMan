@@ -12,6 +12,8 @@ import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.strategies.Strategie;
 import com.pacman.strategies.StrategieAttaqueFantome;
 import com.pacman.strategies.StrategieAttaquePacman;
+import com.pacman.strategies.StrategieFuiteFantome;
+import com.pacman.strategies.StrategieGommePacman;
 import com.pacman.strategies.StrategiePlayer;
 import com.pacman.strategies.StrategieRandom;
 import com.pacman.agent.PacmanAgent;
@@ -125,7 +127,7 @@ public class PacmanGame extends Game {
 		etatFantomes = etatFantomesNormal;
 
 		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
-		//strategiePacman= new StrategieAttaquePacman();
+		strategiePacman= new StrategieGommePacman();
 		
 		
 
@@ -149,7 +151,7 @@ public class PacmanGame extends Game {
 		
 
 		if (gameMode == "com") {
-			//strategiePacman = strategieRandom;
+			strategiePacman = strategieRandom;
 		}
 		else if (gameMode == "player"){
 			strategiePacman = strategiePlayer;
@@ -167,11 +169,12 @@ public class PacmanGame extends Game {
 			etatPacman = etatPacmanBoost; 
 			etatFantomes = etatFantomesApeure;  
 		}
-		
+		/*
 		if (fantomes.size()==0 ||plusDeGomme() ) {
 			System.out.println("Il n'y a plus de fantomes, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());
 			win(); 
 		}
+		*/
 		
 		if ( pacmans.size()==0) {
 			System.out.println("Il n'y a plus de pacmans, fin du jeu. P: "+ pacmans.size()+ ", F: "+fantomes.size());

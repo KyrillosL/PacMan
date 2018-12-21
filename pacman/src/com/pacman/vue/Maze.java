@@ -136,6 +136,18 @@ public class Maze implements Serializable{
 		assert((y>=0) && (y<size_y));
 		return(food[x][y]);
 	}
+	
+	public ArrayList<PositionAgent> getFoodList(){
+		ArrayList<PositionAgent> liste = new ArrayList();
+		
+		for (int i  =0; i < size_x ; i++) {
+			for( int j = 0 ; j < size_y ; j++) {
+				if (isFood(i,j))
+					liste.add(new PositionAgent(i,j,0));
+			}
+		}
+		return liste;
+	}
 
 	public void setFood(int x,int y,boolean b) {
 		food[x][y]=b;
