@@ -124,6 +124,8 @@ public class PacmanGame extends Game {
 		etatPacman = etatPacmanNormal;
 		etatFantomes = etatFantomesNormal;
 
+		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
+		//strategiePacman= new StrategieAttaquePacman();
 		
 		
 
@@ -147,7 +149,7 @@ public class PacmanGame extends Game {
 		
 
 		if (gameMode == "com") {
-			strategiePacman = strategieRandom;
+			//strategiePacman = strategieRandom;
 		}
 		else if (gameMode == "player"){
 			strategiePacman = strategiePlayer;
@@ -188,13 +190,15 @@ public class PacmanGame extends Game {
 		
 		for ( Agent f : fantomes) {
 
-			strategieFantome = new StrategieAttaqueFantome(f,pacmans); 		//TEMP
 
-			moveAgent(f,strategieFantome.getAction(f,maze) );
+
+			moveAgent(f,strategieFantome.getAction(f,maze, pacmans) );
 
 			if (etatJeu == capsuleNonActive) {
-
+				
 				ppg.setGhostsScarred(false);
+				
+				//System.out.println("p: " +pacmans.get(0).position.getX()+","+pacmans.get(0).position.getY()+"f: " + f.position.getX()+","+f.position.getY());
 				
 				if (pacmans.removeIf(p -> (p.position.getX()==f.position.getX() && p.position.getY()==f.position.getY()))){
 					System.out.println("J'ai mangé pacman");
@@ -223,9 +227,9 @@ public class PacmanGame extends Game {
 			}
 			
 
-			strategiePacman= new StrategieAttaquePacman(p, fantomes);
+
 			
-			moveAgent(p,strategiePacman.getAction(p,maze) );
+			moveAgent(p,strategiePacman.getAction(p,maze, fantomes) );
 			
 	
 			if (maze.isFood(p.position.getX(), p.position.getY())) {
@@ -273,12 +277,14 @@ public class PacmanGame extends Game {
 
 	@Override
 	void gameOver() {
-
+		System.out.println("gameover");
 		stop(false); 
 		//notifyObserver(); 
 	}
 	void win() {
+		System.out.println("win");
 		stop(true); 
+		
 		//notifyObserver(); 
 	}
 	

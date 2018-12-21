@@ -1,5 +1,7 @@
 package com.pacman.strategies;
 
+import java.util.ArrayList;
+
 import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
 import com.pacman.agent.PacmanAgent;
@@ -9,7 +11,7 @@ import com.pacman.vue.Maze;
 public class StrategieRandom implements Strategie {
 	
 	@Override
-	public AgentAction getAction(Agent a, Maze m) {
+	public AgentAction getAction(Agent a, Maze m,  ArrayList<Agent> ala) {
 
 		
 			EnumAction test =  EnumAction.haut;

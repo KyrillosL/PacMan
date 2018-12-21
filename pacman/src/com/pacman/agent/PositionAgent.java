@@ -9,8 +9,9 @@ public class PositionAgent {
 	
 	public static final int HAUT=0;
 	public static final int BAS=1;
-	public static final int GAUCHE=2;
-	public static final int DROITE=3;
+	public static final int DROITE=2;
+	public static final int GAUCHE=3;
+
 
 	
 	private int x;
