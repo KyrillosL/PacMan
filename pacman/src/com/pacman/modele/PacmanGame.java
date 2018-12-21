@@ -88,7 +88,6 @@ public class PacmanGame extends Game {
 	}
 	
 	public void initializeGame() {
-		// TODO Auto-generated method stub
 
 		System.out.println("INIT");
 		ppg=null; 
@@ -134,7 +133,6 @@ public class PacmanGame extends Game {
 
 		
 		//System.out.println("AVANT TAKE TURN");
-		// TODO Auto-generated method stub
 		
 		if (etatJeu == capsuleNonActive) {
 			etatFantomes = etatFantomesNormal; 
@@ -161,6 +159,9 @@ public class PacmanGame extends Game {
 		
 		
 		for ( Agent f : fantomes) {
+
+			strategieFantome = new StrategieAttaqueFantome(f,pacmans); 		//TEMP
+
 			moveAgent(f,strategieFantome.getAction(f,maze) );
 
 			if (etatJeu == capsuleNonActive) {
@@ -189,7 +190,7 @@ public class PacmanGame extends Game {
 			}
 			
 
-			
+			strategiePacman= new StrategieAttaquePacman(p, fantomes);
 			
 			moveAgent(p,strategiePacman.getAction(p,maze) );
 			
@@ -238,13 +239,12 @@ public class PacmanGame extends Game {
 	void gameOver() {
 		stop(); 
 		
-		// TODO Auto-generated method stub
 		//notifyObserver(); 
 	}
 	
 	
 	public Maze getMaze() {
-		// TODO Auto-generated method stub
+		// 
 		return maze;
 	}
 	
