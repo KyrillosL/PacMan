@@ -194,7 +194,7 @@ public class IA {
 	        	
 	        	gscoreTentative= gScore.get(posMin) + DISTANCE_ENTRE_CASES;		
 	        	
-	        	if(! openSet.contains(voisins))
+	        	if(! openSet.contains(voisin))
 	        		openSet.add(voisin);		// ajout dans positions découvertes à évaluer
 	        	
 	        	cameFrom.put(voisin, posMin);

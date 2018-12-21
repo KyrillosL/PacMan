@@ -34,8 +34,20 @@ public class StrategieGommePacman implements Strategie{
 		
 		chemins = IA.A_Star_chemin(m, pacman.position, g_min);
 		temp = g_min;
-
-
+		
+		
+		//Cas spécial ou gommes sur case à côté
+		if(cout_min == 1) {
+			if( m.isFood(pacman.position.getX()+1,pacman.position.getY()))
+					return new AgentAction(AgentAction.EnumAction.droite);
+			if( m.isFood(pacman.position.getX(),pacman.position.getY()+1))
+					return new AgentAction(AgentAction.EnumAction.bas);
+			if( m.isFood(pacman.position.getX()-1,pacman.position.getY()))
+					return new AgentAction(AgentAction.EnumAction.gauche);
+			if( m.isFood(pacman.position.getX(),pacman.position.getY()-1))
+					return new AgentAction(AgentAction.EnumAction.haut);
+		}
+					
 		try {
 			do {
 				temp = chemins.get(temp);
@@ -58,7 +70,7 @@ public class StrategieGommePacman implements Strategie{
 			case PositionAgent.DROITE: return new AgentAction(AgentAction.EnumAction.droite);
 
 		}
-		return null;
+		return new AgentAction(AgentAction.EnumAction.gauche);		//random
 	}
 
 }

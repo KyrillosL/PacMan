@@ -127,7 +127,7 @@ public class PacmanGame extends Game {
 		etatPacman = etatPacmanNormal;
 		etatFantomes = etatFantomesNormal;
 
-		strategieFantome = new StrategieAttaqueFantome(); 		//TEMP
+		strategieFantome = new StrategieAttaqueFantome();
 
 		strategiePacman= new StrategieGommePacman();
 		enumAction = EnumAction.vide;
