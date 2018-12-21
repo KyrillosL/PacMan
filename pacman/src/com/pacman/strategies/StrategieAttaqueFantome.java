@@ -1,4 +1,4 @@
-package com.pacman.modele;
+package com.pacman.strategies;
 
 import java.util.ArrayList;
 import java.util.Map;

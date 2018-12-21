@@ -10,6 +10,8 @@ import com.pacman.agent.Agent;
 import com.pacman.agent.AgentAction;
 import com.pacman.agent.AgentAction.EnumAction;
 import com.pacman.strategies.Strategie;
+import com.pacman.strategies.StrategieAttaqueFantome;
+import com.pacman.strategies.StrategieAttaquePacman;
 import com.pacman.strategies.StrategiePlayer;
 import com.pacman.strategies.StrategieRandom;
 import com.pacman.agent.PacmanAgent;
